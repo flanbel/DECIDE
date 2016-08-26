@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="_Game">
+      <UniqueIdentifier>{9a77a336-3071-42e3-b04b-4fc74ed022e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin">
+      <UniqueIdentifier>{5471f298-78b9-482c-a4e0-a0538c994343}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Object">
+      <UniqueIdentifier>{ef678017-5671-4da0-b30a-9d44ae97563c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Scene">
+      <UniqueIdentifier>{c9edbc9d-ada5-4042-9722-a7dde25e7ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\ANDMORE">
+      <UniqueIdentifier>{893a83fc-ca0f-4708-a79f-08ffe6f29409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\%3f">
+      <UniqueIdentifier>{a1878d72-10d4-423a-b529-24f5b7c2b55e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Object\2D">
+      <UniqueIdentifier>{d4bdc425-dc3e-4047-950f-098fcca9425b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Object\3D">
+      <UniqueIdentifier>{9823f9c6-ae83-43bf-a843-7f849eea412a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Object\Pirticle">
+      <UniqueIdentifier>{3bd18eda-b61f-46bd-b771-c602e035a5f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Object\2D\UI">
+      <UniqueIdentifier>{d6670fb2-e3ea-4676-b0db-e948cc8d4a8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Scene">
+      <UniqueIdentifier>{3912f842-6b7b-4e01-a989-fbcc2a4f4789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object">
+      <UniqueIdentifier>{b56bd1d7-e06b-4aee-8b9a-21352d8a8bb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\2D">
+      <UniqueIdentifier>{47c8770f-41ea-404c-80af-e68a3f0befff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\3D">
+      <UniqueIdentifier>{0eb37660-c038-4196-858f-a26727a4be23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\3D\Stage">
+      <UniqueIdentifier>{fc9346a4-92d1-4129-8cb5-e0befc423c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\3D\Character">
+      <UniqueIdentifier>{818dfda9-ad82-4f43-9606-657d84b40bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fbEngin\Manager">
+      <UniqueIdentifier>{066fe9be-bedf-400a-9029-97b423d27ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\3D\Object">
+      <UniqueIdentifier>{a2746dda-2ade-4801-8972-9ca2e1354166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\3D\Item">
+      <UniqueIdentifier>{c8f1d6cd-93ba-43f7-afe8-bdc776420584}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>fbEngin\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>fbEngin\%3f</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsDevice.cpp">
+      <Filter>fbEngin\%3f</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>fbEngin\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModel.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelData.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Winsock.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>fbEngin\Object\Pirticle</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEmitter.cpp">
+      <Filter>fbEngin\Object\Pirticle</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="DInput.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLine.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DLine.cpp">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="2DObject.cpp">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>_Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>_Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectIcon.cpp">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectCursor.cpp">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>_Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaSelectScene.cpp">
+      <Filter>_Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleScene.cpp">
+      <Filter>_Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="3DObject.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSelect.cpp">
+      <Filter>_Game\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CobwebChart.cpp">
+      <Filter>_Game\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="TestStage.cpp">
+      <Filter>_Game\Object\3D\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="TestChara.cpp">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>_Game\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>fbEngin\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>fbEngin\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>fbEngin\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelManager.cpp">
+      <Filter>fbEngin\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="TestItem.cpp">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>fbEngin\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>fbEngin\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowCharacter.cpp">
+      <Filter>_Game\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowCollision.cpp">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="TVman.cpp">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Robo.cpp">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthField.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianFilter.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>fbEngin\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>fbEngin\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>fbEngin\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>fbEngin\%3f</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>fbEngin\%3f</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>fbEngin\%3f</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsDevice.h">
+      <Filter>fbEngin\%3f</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>fbEngin\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModel.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelData.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Winsock.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>fbEngin\Object\Pirticle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEmitter.h">
+      <Filter>fbEngin\Object\Pirticle</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="DInput.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Support.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLine.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DLine.h">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="2DObject.h">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>_Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>_Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectIcon.h">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectCursor.h">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>_Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaSelectScene.h">
+      <Filter>_Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleScene.h">
+      <Filter>_Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="3DObject.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSelect.h">
+      <Filter>_Game\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CobwebChart.h">
+      <Filter>_Game\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>_Game\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="TestStage.h">
+      <Filter>_Game\Object\3D\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="TestChara.h">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>_Game\Object\3D\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>fbEngin\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>fbEngin\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>fbEngin\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelManager.h">
+      <Filter>fbEngin\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TestItem.h">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>fbEngin\Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>fbEngin\Object\2D\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowCharacter.h">
+      <Filter>_Game\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="ShowCollision.h">
+      <Filter>fbEngin\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="TVman.h">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Robo.h">
+      <Filter>_Game\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthField.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianFilter.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="fbEngin.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="fbEngin.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
