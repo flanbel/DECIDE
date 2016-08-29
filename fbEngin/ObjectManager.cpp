@@ -18,7 +18,7 @@ CGameObject* CObjectManager::Add(CGameObject* pAdd, bool leave)
 	{
 		C3DObject* d3 = (C3DObject*)pAdd;
 		//カメラセット
-		d3->SetCamera(*m_pCamera);
+		d3->SetCamera(m_pCamera);
 		m_3D[m_CasheIdx].push_back(d3);
 	}
 

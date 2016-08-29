@@ -37,9 +37,9 @@ public:
 		m_model.SetModelData(pD);
 	}
 	//カメラセット
-	void SetCamera(CCamera* c)
+	void SetCamera(CCamera** c)
 	{
-		m_pCamera = c;
+		m_ppCamera = c;
 	}
 	//親の行列設定
 	void SetParent(D3DXMATRIX* pP)
@@ -67,7 +67,7 @@ protected:
 	//アニメーション管理
 	//CAnimation m_animetion;
 	//カメラ
-	CCamera* m_pCamera;
+	CCamera** m_ppCamera;
 	//ライト(初期値は標準ライト)
 	CLight* m_pLight;
 };

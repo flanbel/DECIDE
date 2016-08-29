@@ -17,6 +17,10 @@ class CCharacterSelect :public C2DObject
 {
 public:
 	CCharacterSelect(string name = "");
+	~CCharacterSelect()
+	{
+		SAFE_DELETE(m_camera);
+	}
 	//初期化を行う関数(一度のみ呼ばれる)
 	void Start();
 
@@ -46,7 +50,7 @@ private:
 	//名前表示
 	CText m_NameText;
 
-	CCamera m_camera;
+	CCamera* m_camera;
 	//3dモデル表示
 	CShowCharacter m_Show;
 

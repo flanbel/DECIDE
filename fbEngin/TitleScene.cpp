@@ -92,5 +92,7 @@ HRESULT CTitleScene::Update()
 
 HRESULT CTitleScene::Draw()
 {
+	SINSTANCE(CObjectManager)->RenderObject();
+
 	return S_OK;
 }

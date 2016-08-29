@@ -14,5 +14,5 @@ void CTestStage::Update()
 
 void CTestStage::Render()
 {
-	m_model.Render(m_pCamera, m_pLight);
+	m_model.Render(*m_ppCamera, m_pLight);
 }

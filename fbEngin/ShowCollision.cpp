@@ -21,7 +21,7 @@ void CShowCollision::Update()
 
 void CShowCollision::Render()
 {
-	m_model.Render(m_pCamera,&CLight::NoLight);
+	m_model.Render(*m_ppCamera,&CLight::NoLight);
 }
 
 void CShowCollision::ShowFrameCollision(const LPD3DXFRAME pFrameBase,const D3DXMATRIX& world)

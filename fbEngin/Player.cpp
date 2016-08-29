@@ -18,7 +18,7 @@ void CPlayer::Start()
 	m_pChara->Start();
 	//初期化
 	m_show.Start();
-	m_show.SetCamera(m_pCamera);
+	m_show.SetCamera(m_ppCamera);
 	//モデルデータセット
 	m_model.SetModelData(m_pChara->GetModelData());
 	//キャラクターのステータス代入
@@ -63,7 +63,7 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render()
 {
-	m_model.Render(m_pCamera,m_pLight);
+	m_model.Render(*m_ppCamera,m_pLight);
 	if (g_DebugMode)
 	{
 		//モデルのコリジョン表示

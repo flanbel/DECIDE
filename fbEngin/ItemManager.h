@@ -12,7 +12,7 @@ public:
 
 	//初期化を行う関数(一度のみ呼ばれる)
 	//第一引数：short アイテム生成確率?
-	void Start(const CCamera* pcamera, const vector<CItem*>* pitemswitch, short probability = 100);
+	void Start(CCamera** ppcamera, const vector<CItem*>* pitemswitch, short probability = 100);
 
 	//更新を行う関数
 	void Update();
@@ -39,7 +39,7 @@ public:
 	}
 private:
 	//カメラ参照
-	CCamera* m_pCamera;
+	CCamera** m_ppCamera;
 	//フィールド上のアイテムを格納
 	list<CItem*> m_ItemList;
 	//アイテム生成確率

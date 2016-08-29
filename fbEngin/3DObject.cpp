@@ -6,6 +6,6 @@ CGameObject(name),
 m_model(&m_Transform)
 {
 	m_Dimension = DIMENSION::D3;
-	m_pCamera = nullptr;
+	m_ppCamera = nullptr;
 	m_pLight = &CLight::Standard;
 }

@@ -25,7 +25,6 @@ void CSceneManager::UpdateScene()
 
 void CSceneManager::DrawScene()
 {
-	SINSTANCE(CObjectManager)->RenderObject();
 	m_scenes[m_nowScene]->Draw();
 
 	m_scenes[m_nowScene]->DrawFade();

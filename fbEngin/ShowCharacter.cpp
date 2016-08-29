@@ -25,5 +25,5 @@ void CShowCharacter::Update()
 void CShowCharacter::Render()
 {
 	if (m_pChara != nullptr)
-		m_model.Render(m_pCamera, m_pLight);
+		m_model.Render(*m_ppCamera, m_pLight);
 }

@@ -27,5 +27,6 @@ HRESULT CTestScene::Update()
 
 HRESULT CTestScene::Draw()
 {
+	SINSTANCE(CObjectManager)->RenderObject();
 	return S_OK;
 }

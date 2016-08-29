@@ -7,14 +7,14 @@ CItemManager::CItemManager()
 
 }
 
-void CItemManager::Start(const CCamera* pcamera, const vector<CItem*>* pitemswitch, short probability)
+void CItemManager::Start(CCamera** ppcamera, const vector<CItem*>* pitemswitch, short probability)
 {
-	m_pCamera = (CCamera*)pcamera;
+	m_ppCamera = ppcamera;
 	m_ItemSwitch = (vector<CItem*>*)pitemswitch;
 	m_probability = probability;
 	m_maxnum = m_ItemSwitch->size();
 
-	m_range = { 200, 1, 200 };
+	m_range = { 200, 10, 200 };
 	srand(time(NULL));
 }
 
@@ -26,7 +26,7 @@ void CItemManager::Update()
 		//アイテムスイッチからランダムに生成
 		CItem* AddItem = new CTestItem;// m_ItemSwitch->data()[rand() % m_maxnum];
 		//アイテム初期化
-		AddItem->SetCamera(m_pCamera);
+		AddItem->SetCamera(m_ppCamera);
 		AddItem->Awake();
 		AddItem->Start();
 		D3DXVECTOR3 p = { (rand() % ((short)m_range.x * 2)) - m_range.x, (rand() % ((short)m_range.y * 2)) - m_range.y, (rand() % ((short)m_range.z * 2)) - m_range.z };

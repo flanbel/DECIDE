@@ -11,6 +11,8 @@
 #include "TextureManager.h"
 #include "DepthField.h"
 
+#include "Image.h"
+
 class CBattleScene:public CScene
 {
 public:
@@ -26,8 +28,14 @@ public:
 	//オブジェクトのRenderより後に呼ばれる
 	HRESULT Draw();
 private:
-	CCamera m_maincamera;
-	//アイテムスイッチ
+	CCamera** m_pCamera;
+	CCamera* m_pMainCamera;
+	CCamera* m_pShadowCamera;
+
+	TEXTURE m_Shadowtex;
+	CRenderTarget m_ShadowBuffer;
+
+	//アイテムスイッチ(出現するアイテム管理)
 	vector<CItem*> m_ItemSwitch;
 	CItemManager m_ItemManager;
 
@@ -36,6 +44,8 @@ private:
 	CRenderTarget m_RenderTarget[2];
 	TEXTURE m_tex[2];
 	CDepthField m_depth;
+
+	CImage m_i;
 	
 };
 

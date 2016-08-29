@@ -23,5 +23,6 @@ HRESULT CMenuScene::Update()
 
 HRESULT CMenuScene::Draw()
 {
+	SINSTANCE(CObjectManager)->RenderObject();
 	return S_OK;
 }

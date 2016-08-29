@@ -115,6 +115,7 @@ HRESULT CCharaSelectScene::Update()
 
 HRESULT CCharaSelectScene::Draw()
 {
+	SINSTANCE(CObjectManager)->RenderObject();
 	return S_OK;
 }
 

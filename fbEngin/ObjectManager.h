@@ -55,9 +55,9 @@ public:
 
 	//カメラセット
 	//シーンの一番最初にやっておいた方がいいよ
-	void SetCamera(CCamera* c)
+	void SetCamera(CCamera** c)
 	{
-		(*m_pCamera) = c;
+		m_pCamera = c;
 	}
 
 	static CObjectManager* getInstance();

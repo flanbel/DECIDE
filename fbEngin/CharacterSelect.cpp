@@ -55,14 +55,16 @@ void CCharacterSelect::Start()
 	m_NameText.Transform()->SetParent(&m_Transform);
 	m_NameText.Transform()->LocalPosition = D3DXVECTOR3(0.0f, 200.0f, 0.0f);
 
+
+	m_camera = new CCamera();
 	//m_pShow = (CShowCharacter*)SINSTANCE(CObjectManager)->Add(new CShowCharacter(m_Name + "ShowChara"));
 	m_Show.SetCamera(&m_camera);
 	m_Show.name(m_Name + "ShowChara");
 	m_Show.Start();
 	
-	m_camera.Start();
-	m_camera.Dist(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
-	m_camera.TargetPos(D3DXVECTOR3(0.0f, 8.5f, 0.0f));
+	m_camera->Start();
+	m_camera->Dist(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	m_camera->TargetPos(D3DXVECTOR3(0.0f, 8.5f, 0.0f));
 
 	m_RenderT.CreateRenderTarget(m_Sprite.GetpTex(), 256, 350, D3DCOLOR_RGBA(255, 255, 255, 255));
 
@@ -72,7 +74,7 @@ void CCharacterSelect::Start()
 
 void CCharacterSelect::Update()
 {
-	m_camera.Update();
+	m_camera->Update();
 	//m_camera.Move();
 
 	m_Transform.UpdateTransform();
