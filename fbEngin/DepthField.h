@@ -3,12 +3,11 @@
 #define _DEPTHFIELD_H_
 
 #include "RenderTarget.h"
-#include "TextureManager.h"
 #include "GaussianFilter.h"
-#include "Image.h"
+#include "Sprite.h"
 
 //îÌé äEê[ìx
-class CDepthField
+class CDepthField :public CSprite
 {
 public:
 	void Initialize();
@@ -17,7 +16,6 @@ private:
 	CGaussianFilter m_Gaussian;
 	CRenderTarget m_RT[4];
 	TEXTURE m_tex[4];
-	CImage m_image;
 };
 
 

@@ -9,7 +9,6 @@
 
 #include "RenderTarget.h"
 #include "TextureManager.h"
-#include "Image.h"
 #include "DepthField.h"
 
 class CBattleScene:public CScene
@@ -36,7 +35,6 @@ private:
 
 	CRenderTarget m_RenderTarget[2];
 	TEXTURE m_tex[2];
-	CImage m_i;
 	CDepthField m_depth;
 	
 };

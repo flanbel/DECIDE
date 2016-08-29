@@ -20,8 +20,8 @@ CCamera::CCamera()
 
 	m_ViewAngle = 45;
 	m_Aspect = (16.0f / 9.0f);
-	m_Near = 1.0f;
-	m_Far = 2000.0f;
+	m_Near = 60.0f;
+	m_Far = 600.0f;
 	//ê≥ñ Ç0Ç∆Ç∑ÇÈ
 	m_angle = VECTOR3_ZERO;;
 }
@@ -107,6 +107,17 @@ void CCamera::Move()
 		else if (GetAsyncKeyState(VK_DOWN))
 		{
 			m_Dist.y--;
+		}
+	}
+	else
+	{
+		if (GetAsyncKeyState(VK_UP))
+		{
+			m_Dist.z++;
+		}
+		else if (GetAsyncKeyState(VK_DOWN))
+		{
+			m_Dist.z--;
 		}
 	}
 

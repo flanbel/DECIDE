@@ -115,18 +115,18 @@ public:
 		//透明度加算
 		AddAlpha(addAlpha);
 	}
-protected:
+private:
 	//UV
 	D3DXVECTOR4 m_uv;
 	//テクスチャ
 	TEXTURE m_tex;
-	CEffect* m_pEffect;
 	//混ぜる色
 	D3DXCOLOR m_BlendColor;
-	
 	//削除する色(透過色指定)
 	D3DXCOLOR m_KillColor;
-
+protected:
+	//
+	CEffect* m_pEffect;
 	//こいつを使いまわすのでstatic
 	//頂点バッファー
 	static LPDIRECT3DVERTEXBUFFER9 m_pVB;

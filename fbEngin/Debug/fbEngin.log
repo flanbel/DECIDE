@@ -1,0 +1,67 @@
+﻿Build started 2016/08/29 15:46:20.
+     1>Project "D:\_Users\Desktop\DECIDE\fbEngin\fbEngin.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIstdafx.h /analyze- /errorReport:prompt Camera.cpp
+         Camera.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_Users\Desktop\DECIDE\Debug\fbEngin.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\_Users\Desktop\DECIDE\Debug\fbEngin.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\_Users\Desktop\DECIDE\Debug\fbEngin.lib" /MACHINE:X86 Debug\fbEngin.res
+         Debug\2DLine.obj
+         Debug\2DObject.obj
+         Debug\3DLine.obj
+         Debug\3DObject.obj
+         Debug\Animation.obj
+         Debug\BattleScene.obj
+         Debug\Button.obj
+         Debug\Camera.obj
+         Debug\CharacterSelect.obj
+         Debug\CharaSelectScene.obj
+         Debug\CobwebChart.obj
+         Debug\DepthField.obj
+         Debug\DInput.obj
+         Debug\EffectManager.obj
+         Debug\GameObject.obj
+         Debug\GaussianFilter.obj
+         Debug\Image.obj
+         Debug\Item.obj
+         Debug\ItemManager.obj
+         Debug\MenuScene.obj
+         Debug\Player.obj
+         Debug\Robo.obj
+         Debug\Scene.obj
+         Debug\SelectCursor.obj
+         Debug\SelectIcon.obj
+         Debug\ShowCharacter.obj
+         Debug\ShowCollision.obj
+         Debug\SkinModelManager.obj
+         Debug\Sprite.obj
+         Debug\TestChara.obj
+         Debug\TestItem.obj
+         Debug\TestStage.obj
+         Debug\Font.obj
+         Debug\GraphicsDevice.obj
+         Debug\Light.obj
+         Debug\main.obj
+         Debug\ObjectManager.obj
+         Debug\Particle.obj
+         Debug\ParticleEmitter.obj
+         Debug\Random.obj
+         Debug\RenderTarget.obj
+         Debug\Text.obj
+         Debug\Timer.obj
+         Debug\TitleScene.obj
+         Debug\TVman.obj
+         Debug\Vector.obj
+         Debug\Winsock.obj
+         Debug\SceneManager.obj
+         Debug\SkinModel.obj
+         Debug\SkinModelData.obj
+         Debug\stdafx.obj
+         Debug\TestScene.obj
+         Debug\TextureManager.obj
+         Debug\Transform.obj
+         fbEngin.vcxproj -> D:\_Users\Desktop\DECIDE\Debug\fbEngin.exe
+     1>Done Building Project "D:\_Users\Desktop\DECIDE\fbEngin\fbEngin.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.70

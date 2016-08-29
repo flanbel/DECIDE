@@ -38,7 +38,6 @@ HRESULT CBattleScene::Start()
 	m_RenderTarget[1].CreateRenderTarget(&m_tex[1], GAME_CLIENT_WIDTH, GAME_CLIENT_HEIGHT);
 
 	m_depth.Initialize();
-	m_i.Transform()->Position = D3DXVECTOR3(GAME_CLIENT_WIDTH, GAME_CLIENT_HEIGHT / 2, 0.0f);
 
 	return S_OK;
 }
@@ -79,10 +78,6 @@ HRESULT CBattleScene::Draw()
 	CRenderTarget::BeforeRenderTarget();
 
 	m_depth.DepthofField(&m_tex[0], &m_tex[1]);
-
-	//Šm”F—p
-	m_i.SetTex(m_tex[1]);
-	m_i.Render();
 	
 	return S_OK;
 }

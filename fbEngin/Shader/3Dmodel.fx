@@ -173,31 +173,22 @@ PS_OUTPUT PSMain(VS_OUTPUT In)
 	color.color0 *= g_blendColor;
 
 	//深度計算
-	float Depth = In.posWVP.z / 360.0f;
+	//暗くなる
+	float Depth = (In.posWVP.z / In.posWVP.w);
 
-	if (Depth <= 0.5)
+	if (0.0f <= Depth && Depth < 0.25f)
 	{
-		color.color1 = 2 * Depth;
+		color.color1.a = 4 *  Depth;
 	}
-	else if (Depth > 0.5)
+	else if (0.25f < Depth && Depth < 0.75f)
 	{
-		color.color1 = 2 * (1 - Depth);
+		color.color1.a = 1.0f;
 	}
-
-	/*if (Depth < 0.25)
+	else if (0.75f < Depth && Depth <= 1.0f)
 	{
-		color.color0 = 4 * Depth;
+		color.color1.a = 4 * (1 - Depth);
 	}
-	else if (Depth < 0.75)
-	{
-		color.color0 = 1.0f;
-	}
-	else if (Depth >= 0.75)
-	{
-		color.color0 = 4 * (1 - Depth);
-	}*/
-	color.color1.a = 1.0f;
-
+	
 	//if (true){
 
 	//	//αに輝度を埋め込む。

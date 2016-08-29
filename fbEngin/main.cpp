@@ -339,8 +339,12 @@ void Update()
 void Draw()
 {
 	//画面を白色でクリア
-	(*graphicsDevice()).Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
+	(*graphicsDevice()).Clear(0,
+		NULL,
+		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+		D3DCOLOR_XRGB(255, 255, 255),
+		1.0f,
+		0);
 
 	//シーン開始
 	if (SUCCEEDED((*graphicsDevice()).BeginScene()))

@@ -76,20 +76,18 @@ VS_OUTPUT VS_Main(VS_INPUT In)
 float4 PS_Main(VS_OUTPUT In) : COLOR0
 {
 
-	float4 color = tex2D(g_Tex3Sampler, In.uv);
-	float Depth = tex2D(g_DepthSampler, In.uv);
+	float4 color;
+	float4 Depth = tex2D(g_DepthSampler, In.uv);
 
-	if(Depth.a == 0.0f)
+	if (Depth.a > 0.5)
 	{
-		color = tex2D(g_Tex3Sampler, In.uv);
-	}
-	else if (Depth.a < 0.6)
-	{
-		color = tex2D(g_Tex2Sampler, In.uv);
+		//元とボケ
+		color = (1 - Depth) * tex2D(g_Tex1Sampler, In.uv) + Depth * tex2D(g_Tex2Sampler, In.uv);
 	}
 	else
 	{
-		color = tex2D(g_Tex1Sampler, In.uv);
+		//ボケとおおぼけ
+		color = (1 - Depth) * tex2D(g_Tex3Sampler, In.uv) + Depth * tex2D(g_Tex2Sampler, In.uv);
 	}
 
 	return color;
