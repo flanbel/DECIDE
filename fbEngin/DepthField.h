@@ -14,8 +14,8 @@ public:
 	void DepthofField(TEXTURE* tex1,TEXTURE* Depth);
 private:
 	CGaussianFilter m_Gaussian;
-	CRenderTarget m_RT[4];
-	TEXTURE m_tex[4];
+	CRenderTarget m_RT[3];
+	TEXTURE m_tex[3];
 };
 
 

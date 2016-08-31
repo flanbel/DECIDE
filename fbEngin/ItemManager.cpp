@@ -14,7 +14,7 @@ void CItemManager::Start(CCamera** ppcamera, const vector<CItem*>* pitemswitch, 
 	m_probability = probability;
 	m_maxnum = m_ItemSwitch->size();
 
-	m_range = { 200, 10, 200 };
+	m_range = { 200, 1, 200 };
 	srand(time(NULL));
 }
 

@@ -118,6 +118,7 @@ struct PS_OUTPUT
 {
 	float4 color0 : COLOR0;		//РF
 	float4 color1 : COLOR1;		//Р[Уx
+	float4 color2 : COLOR2;		//Р[Уx(Т▓Ро)
 };
 
 /*!
@@ -153,17 +154,19 @@ PS_OUTPUT PSMain( VS_OUTPUT In )
 	//Р[УxМvОZ
 	float Depth = (In.PosWVP.z / In.PosWVP.w);
 
+	output.color1 = Depth;
+
 	if (0.0f <= Depth && Depth < 0.25f)
 	{
-		output.color1.a = 4 * Depth;
+		output.color2.a = 4 * Depth;
 	}
 	else if (0.25f < Depth && Depth < 0.75f)
 	{
-		output.color1.a = 1.0f;
+		output.color2.a = 1.0f;
 	}
 	else if (0.75f < Depth && Depth <= 1.0f)
 	{
-		output.color1.a = 4 * (1 - Depth);
+		output.color2.a = 4 * (1 - Depth);
 	}
 
 	return output;

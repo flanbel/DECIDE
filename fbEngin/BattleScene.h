@@ -28,24 +28,24 @@ public:
 	//オブジェクトのRenderより後に呼ばれる
 	HRESULT Draw();
 private:
-	CCamera** m_pCamera;
+	CCamera** m_ppCamera;	//カメラポインタへのポインタを格納
 	CCamera* m_pMainCamera;
 	CCamera* m_pShadowCamera;
 
-	TEXTURE m_Shadowtex;
+	TEXTURE m_Shadowtex;	//影のテクスチャ
 	CRenderTarget m_ShadowBuffer;
 
-	//アイテムスイッチ(出現するアイテム管理)
-	vector<CItem*> m_ItemSwitch;
+	
+	vector<CItem*> m_ItemSwitch;	//アイテムスイッチ(出現するアイテム管理)
 	CItemManager m_ItemManager;
 
 	CPlayer* m_Player;
 
-	CRenderTarget m_RenderTarget[2];
+	CRenderTarget m_RenderTarget[2];	//被写界深度用
 	TEXTURE m_tex[2];
 	CDepthField m_depth;
 
-	CImage m_i;
+	CImage m_i;	//確認用
 	
 };
 

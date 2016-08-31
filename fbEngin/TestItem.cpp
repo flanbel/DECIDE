@@ -19,5 +19,5 @@ void CTestItem::LateUpdate()
 
 void CTestItem::Render()
 {
-	m_model.Render(*m_ppCamera, m_pLight);
+	m_model.Render(*m_ppCamera, m_pLightCamera, m_pLight);
 }

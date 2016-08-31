@@ -26,6 +26,7 @@ void CPlayer::Start()
 
 	//m_model.RenderType(TYPE::SPECULAR,true);
 
+	m_Transform.LocalPosition = D3DXVECTOR3(0.0, 0.0, 0.0);
 	m_Transform.LocalRotation = D3DXVECTOR3(-90.0, 0.0, 0.0);
 	m_dir = VECTOR3_ZERO;
 }
@@ -63,7 +64,7 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render()
 {
-	m_model.Render(*m_ppCamera,m_pLight);
+	m_model.Render(*m_ppCamera, m_pLightCamera, m_pLight);
 	if (g_DebugMode)
 	{
 		//モデルのコリジョン表示
@@ -84,7 +85,7 @@ void CPlayer::Move()
 
 	float delta = (float)SINSTANCE(CTimer)->DeltaTime();
 	//スピード倍率
-	float speedratio = 1.0f + ((m_State.speed - 3) * 0.1);
+	float speedratio = 1.0f + ((m_State.speed - 3) * 0.1f);
 
 	//簡易移動
 	//前

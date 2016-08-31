@@ -17,6 +17,10 @@ public:
 	//変更したレンダーターゲットをバックバッファーに戻す。
 	static void BeforeRenderTarget();
 
+	//レンダーターゲットから外す
+	//第一引数：DWORD　外したいレンダーターゲットの添え字
+	static void RemoveRenderTarget(DWORD RenderTargetIndex);
+
 	//新しいレンダリングターゲット作成
 	//第一引数：TEXTURE* レンダーターゲットにしたいテクスチャ,
 	//第二引数：UINT テクスチャの横幅,

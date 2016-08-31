@@ -2,6 +2,7 @@
 
 #ifndef _SKINMODEL_H_
 #define _SKINMODEL_H_
+#include "TextureManager.h"
 
 //描画タイプ
 enum TYPE
@@ -26,8 +27,10 @@ public:
 	~CSkinModel();
 
 	//3Dモデルの描画を呼び出す
-	//第一引数：CCamera* カメラ,第二引数：：CLight* ライト(任意)　= &CLight::Standard(標準ライト)
-	void Render(CCamera*,CLight* = nullptr);
+	//第一引数：CCamera* カメラ,
+	//第二引数：CCamera* ライトのカメラ,
+	//第三引数：：CLight* ライト(任意)　= &CLight::Standard(標準ライト)
+	void Render(CCamera*, CCamera*, CLight* = nullptr);
 
 	//色設定
 	void BlendColor(D3DXVECTOR4 color)
@@ -64,6 +67,12 @@ public:
 
 	//モデルデータの行列更新
 	void UpdateFrameMatrix();
+
+
+	void SetDepth(TEXTURE tex)
+	{
+		m_pLightDepth = tex;
+	}
 private:
 	//エフェクトへの参照
 	CEffect* m_pEffect;
@@ -81,7 +90,10 @@ private:
 	//保持用
 	CTransform* m_pTrans;
 	CCamera* m_pCamera;
+	CCamera* m_pLightCamera;	//ライトのカメラ
 	CLight* m_pLight;
+
+	TEXTURE m_pLightDepth;		//ライトから見た深度テクスチャ
 
 	//プライベート関数
 

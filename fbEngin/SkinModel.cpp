@@ -82,10 +82,11 @@ void CSkinModel::DrawFrame(LPD3DXFRAME pFrame)
 }
 
 
-void CSkinModel::Render(CCamera* pcamera, CLight* plight)
+void CSkinModel::Render(CCamera* pcamera, CCamera* plightcamera, CLight* plight)
 {
 	//カメラ設定
 	m_pCamera = pcamera;
+	m_pLightCamera = plightcamera;
 	if (plight != nullptr)
 		m_pLight = plight;
 
@@ -291,14 +292,19 @@ void CSkinModel::RenderNonAnimate(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3D
 		}
 
 		//影のテクスチャを持っている
-		/*
-		if (m_ShadowTex != NULL)
+		
+		if (m_pLightDepth.pTexture != nullptr)
 		{
-		m_pEffect->SetMatrix("LVPmat", &m_LVP);
-		m_pEffect->SetTexture("g_ShadowTexture", m_ShadowTex);
-		m_pEffect->SetBool("Shadowflg", true);
+			D3DXMATRIX LVP = m_pLightCamera->View() * m_pLightCamera->Projection();
+			m_pEffect->SetMatrix("g_LVP", &LVP);
+			m_pEffect->SetTexture("g_LVPTex", m_pLightDepth.pTexture);
+			m_pEffect->SetBool("Shadowflg", true);
 		}
-		*/
+		else
+		{
+			m_pEffect->SetBool("Shadowflg", false);
+		}
+		
 
 		{
 			//色の倍率

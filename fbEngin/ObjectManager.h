@@ -16,8 +16,8 @@ public:
 	CObjectManager()
 	{
 		m_CasheIdx = 0;
-		m_pCamera = new CCamera*();
-		(*m_pCamera) = nullptr;
+		m_ppCamera = new CCamera*();
+		(*m_ppCamera) = nullptr;
 	}
 	//マネージャーにオブジェクトを追加する
 	//戻り値：CGameObject* 追加に成功したオブジェクトのポインタ
@@ -54,12 +54,22 @@ public:
 	CGameObject* FindObject(string name, DIMENSION d = DIMENSION::DNON);
 
 	//カメラセット
-	//シーンの一番最初にやっておいた方がいいよ
 	void SetCamera(CCamera** c)
 	{
-		m_pCamera = c;
+		m_ppCamera = c;
 	}
 
+	//
+	void SetLightCamera(CCamera* c)
+	{
+		m_pLightCamera = c;
+	}
+
+	void SetLightDepth(TEXTURE tex)
+	{
+		m_LightDepth = tex;
+	}
+	
 	static CObjectManager* getInstance();
 private:
 	//3Dオブジェクトを管理する配列
@@ -69,7 +79,13 @@ private:
 	vector<C2DObject*> m_2D[SCENECASHE_NUM];
 
 	//カメラのポインタの参照
-	CCamera** m_pCamera;
+	CCamera** m_ppCamera;
+
+	//
+	CCamera* m_pLightCamera;
+
+	//
+	TEXTURE m_LightDepth;
 
 	//キャッシュの添え字
 	short m_CasheIdx;

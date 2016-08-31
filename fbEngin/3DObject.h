@@ -41,6 +41,15 @@ public:
 	{
 		m_ppCamera = c;
 	}
+	//ライトカメラセット
+	void SetLightCamera(CCamera* c)
+	{
+		m_pLightCamera = c;
+	}
+	void SetLightDepth(TEXTURE tex)
+	{
+		m_model.SetDepth(tex);
+	}
 	//親の行列設定
 	void SetParent(D3DXMATRIX* pP)
 	{
@@ -68,6 +77,10 @@ protected:
 	//CAnimation m_animetion;
 	//カメラ
 	CCamera** m_ppCamera;
+	//ライトカメラ
+	CCamera* m_pLightCamera;
+	//
+	TEXTURE m_LightDepth;
 	//ライト(初期値は標準ライト)
 	CLight* m_pLight;
 };

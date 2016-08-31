@@ -18,7 +18,9 @@ CGameObject* CObjectManager::Add(CGameObject* pAdd, bool leave)
 	{
 		C3DObject* d3 = (C3DObject*)pAdd;
 		//カメラセット
-		d3->SetCamera(m_pCamera);
+		d3->SetCamera(m_ppCamera);
+		if (m_pLightCamera != nullptr)
+		d3->SetLightCamera(m_pLightCamera);
 		m_3D[m_CasheIdx].push_back(d3);
 	}
 
@@ -94,10 +96,14 @@ void CObjectManager::LateUpdateObject()
 	}
 
 	//カメラの更新は最後?
-	if ((*m_pCamera) != nullptr)
+	if ((*m_ppCamera) != nullptr)
 	{
-		(*m_pCamera)->Move();
-		(*m_pCamera)->Update();
+		(*m_ppCamera)->Move();
+		(*m_ppCamera)->Update();
+	}
+	if (m_pLightCamera != nullptr)
+	{
+		m_pLightCamera->Update();
 	}
 }
 
@@ -107,6 +113,10 @@ void CObjectManager::RenderObject()
 	{
 		if (m_3D[m_CasheIdx][i]->Active())
 		{
+			if (m_LightDepth.pTexture != nullptr)
+			{
+				m_3D[m_CasheIdx][i]->SetLightDepth(m_LightDepth);
+			}
 			m_3D[m_CasheIdx][i]->Render();
 		}
 	}

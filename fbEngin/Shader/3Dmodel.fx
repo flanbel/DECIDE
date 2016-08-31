@@ -5,6 +5,7 @@ bool g_Texflg;							//テクスチャ
 bool Toonflg;							//トゥーンシェーダ
 bool Specflg;							//スペキュラーライト
 bool Fresnelflg;						//フレネル反射
+bool Shadowflg;							//シャドウフラグ
 
 float4x4 g_rotationMatrix;				//回転行列。法線を回転させるために必要になる。ライティングするなら必須。
 float4x4 g_worldMatrix;					//ワールド行列。
@@ -14,17 +15,29 @@ float4x4 g_projectionMatrix;			//プロジェクション行列。
 float4x4 g_viewMatrixRotInv;			 //カメラの回転行列の逆行列
 
 float4	 g_eyePos;						//視点。
+float4x4 g_LVP;							//ライトのビュープロジェクション行列
+
+texture g_LVPTex;				//テクスチャ。
+sampler g_LVPTexSampler =
+sampler_state
+{
+	Texture = <g_LVPTex>;
+	MipFilter = NONE;
+	MinFilter = NONE;
+	MagFilter = NONE;
+};
+
 
 #define DIFFUSE_LIGHT_NUM	4			//ディフューズライトの数。
 float4	g_diffuseLightDirection[DIFFUSE_LIGHT_NUM];	//ディフューズライトの方向。
 float4	g_diffuseLightColor[DIFFUSE_LIGHT_NUM];		//ディフューズライトのカラー。
 float4	g_ambientLight;								//環境光。
 
-float4  g_blendColor;					//混ぜる色(倍率)
+float4  g_blendColor;			//混ぜる色(倍率)
 
-float4  g_diffuseMaterial : COLOR0;		//マテリアルカラー
+float4  g_diffuseMaterial;		//マテリアルカラー
 
-texture g_Texture;						//テクスチャ。
+texture g_Texture;				//テクスチャ。
 sampler g_TextureSampler = 
 sampler_state
 {
@@ -60,8 +73,9 @@ struct VS_OUTPUT{
 	float4	color	: COLOR0;
 	float2	uv		: TEXCOORD0;
 	float3	normal	: TEXCOORD1;
-	float4	worldPos: TEXCOORD2;		//ワールド空間での頂点座標。
-	float4  posWVP	: TEXCOORD3;			//深度出すためのポジション
+	float4	worldPos: TEXCOORD2;	//ワールド空間での頂点座標。
+	float4  posWVP	: TEXCOORD3;	//深度出すためのポジション,posを使うと怒られたため仕方なく作った
+	float4  ZCalcTex : TEXCOORD4;	// Z値算出用テクスチャ
 };
 
 /*!
@@ -69,7 +83,7 @@ struct VS_OUTPUT{
  */
 VS_OUTPUT VSMain(VS_INPUT In)
 {
-	VS_OUTPUT Out;
+	VS_OUTPUT Out = (VS_OUTPUT)0;
 	float4 pos;
 	//モデルのローカル空間からワールド空間に変換。
 	pos = mul( In.pos, g_worldMatrix );
@@ -80,6 +94,12 @@ VS_OUTPUT VSMain(VS_INPUT In)
 	pos = mul( pos, g_viewMatrix );			//ワールド空間からビュー空間に変換。
 	pos = mul( pos, g_projectionMatrix );	//ビュー空間から射影空間に変換。
 
+	if (Shadowflg)
+	{
+		Out.ZCalcTex = mul(In.pos, g_worldMatrix);	 // ライトの目線によるワールドビュー射影変換をする
+		Out.ZCalcTex = mul(Out.ZCalcTex, g_LVP);	 // ライトの目線によるワールドビュー射影変換をする
+	}
+	
 	Out.pos = pos;
 	Out.posWVP = Out.pos;
 	Out.color = In.color;
@@ -93,6 +113,7 @@ struct PS_OUTPUT
 {
 	float4 color0 : COLOR0;		//色
 	float4 color1 : COLOR1;		//深度
+	float4 color2 : COLOR2;		//深度(調整)
 };
 /*!
  *@brief	ピクセルシェーダー。
@@ -172,21 +193,41 @@ PS_OUTPUT PSMain(VS_OUTPUT In)
 
 	color.color0 *= g_blendColor;
 
-	//深度計算
-	//暗くなる
+	if (Shadowflg)
+	{
+		// ライト目線によるZ値の再算出
+		float ZValue = In.ZCalcTex.z / In.ZCalcTex.w;
+
+		// 射影空間のXY座標をテクスチャ座標に変換
+		float2 TransTexCoord;
+		TransTexCoord.x = (1.0f + In.ZCalcTex.x / In.ZCalcTex.w)*0.5f;
+		TransTexCoord.y = (1.0f + (-In.ZCalcTex.y) / In.ZCalcTex.w)*0.5f;
+
+		// リアルZ値抽出
+		float SM_Z = tex2D(g_LVPTexSampler, TransTexCoord).x;
+
+		// 算出点がシャドウマップのZ値よりも大きければ影と判断
+		if (ZValue > SM_Z + 0.005f){
+			color.color0.rgb = color.color0.rgb * 0.5f;
+		}
+	}
+
+	//深度計算(RenderTarget1に出力される)
 	float Depth = (In.posWVP.z / In.posWVP.w);
+
+	color.color1 = Depth;
 
 	if (0.0f <= Depth && Depth < 0.25f)
 	{
-		color.color1.a = 4 *  Depth;
+		color.color2.a = 4 *  Depth;
 	}
 	else if (0.25f < Depth && Depth < 0.75f)
 	{
-		color.color1.a = 1.0f;
+		color.color2.a = 1.0f;
 	}
 	else if (0.75f < Depth && Depth <= 1.0f)
 	{
-		color.color1.a = 4 * (1 - Depth);
+		color.color2.a = 4 * (1 - Depth);
 	}
 	
 	//if (true){
@@ -217,16 +258,14 @@ PS_OUTPUT PSMain(VS_OUTPUT In)
 /*!
 *@brief	エッジ用頂点シェーダー。
 */
-float4 VSEdge(VS_INPUT In,uniform bool edge) : POSITION
+float4 VSEdge(VS_INPUT In) : POSITION
 {
 	float4 pos = In.pos;
 	//法線の方向に広げる(エッジの幅となる)
 
-	if (edge)
-	{
-		In.normal = mul(In.normal, g_rotationMatrix);	//法線を回す。
-		pos.xyz += In.normal.xyz * 1.0f;			//法線方向に大きく
-	}
+
+	In.normal = mul(In.normal, g_rotationMatrix);	//法線を回す。
+	pos.xyz += In.normal.xyz * 1.0f;			//法線方向に大きく
 
 	pos = mul(pos, g_worldMatrix);		//モデルのローカル空間からワールド空間に変換。
 	pos = mul(pos, g_viewMatrix);			//ワールド空間からビュー空間に変換。
@@ -235,20 +274,12 @@ float4 VSEdge(VS_INPUT In,uniform bool edge) : POSITION
 	return pos;
 }
 /*!
-*@brief	エッジ用ピクセルシェーダー。(大嘘)
+*@brief	エッジ用ピクセルシェーダー。
 */
-float4 PSEdge(uniform bool edge) : COLOR0
+float4 PSEdge() : COLOR0
 {
-	if (edge)
-	{
-		//真っ黒
-		return float4(0.0f, 0.0f, 0.0f, 1.0f);
-	}
-	else
-	{
-		//灰色(影用)
-		return float4(0.5f, 0.5f, 0.5f, 1.0f);
-	}
+	//真っ黒
+	return float4(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 ////////////////////////////
@@ -269,16 +300,7 @@ technique EdgeRender
 {
 	pass p0
 	{
-		VertexShader = compile vs_2_0 VSEdge(true);
-		PixelShader = compile ps_2_0 PSEdge(true);
+		VertexShader = compile vs_2_0 VSEdge();
+		PixelShader = compile ps_2_0 PSEdge();
 	}
 }
-
-technique CreateShadow
-{
-	pass p0
-	{
-		VertexShader = compile vs_2_0 VSEdge(false);
-		PixelShader = compile ps_2_0 PSEdge(false);
-	}
-};

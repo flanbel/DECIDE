@@ -69,13 +69,13 @@ void CRenderTarget::SetRenderTarget(DWORD Index)
 	(*graphicsDevice()).SetViewport(&m_afterViewport);
 
 	//レンダリングターゲット初期化
-	/*(*graphicsDevice()).Clear(
+	(*graphicsDevice()).Clear(
 		0,
 		NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 		m_ClearColor,
 		1.0f,
-		0);*/
+		0);
 }
 
 void CRenderTarget::BeforeRenderTarget()
@@ -84,4 +84,9 @@ void CRenderTarget::BeforeRenderTarget()
 	(*graphicsDevice()).SetRenderTarget(0, m_pBackBuffer);
 	(*graphicsDevice()).SetDepthStencilSurface(m_pBackZ);
 	(*graphicsDevice()).SetViewport(&m_beforeViewport);
+}
+
+void CRenderTarget::RemoveRenderTarget(DWORD RenderTargetIndex)
+{
+	(*graphicsDevice()).SetRenderTarget(RenderTargetIndex, NULL);
 }
