@@ -114,6 +114,7 @@
     <ClCompile Include="ShowCollision.cpp" />
     <ClCompile Include="SkinModelManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StageObject.cpp" />
     <ClCompile Include="TestChara.cpp" />
     <ClCompile Include="TestItem.cpp" />
     <ClCompile Include="TestStage.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="SkinModelManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageObject.h" />
     <ClInclude Include="TestChara.h" />
     <ClInclude Include="TestItem.h" />
     <ClInclude Include="TestStage.h" />

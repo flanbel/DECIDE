@@ -241,6 +241,9 @@
     <ClCompile Include="CreateStage.cpp">
       <Filter>_Game\Object\3D\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="StageObject.cpp">
+      <Filter>_Game\Object\3D\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -442,6 +445,9 @@
       <Filter>_Game\Object\3D\Camera</Filter>
     </ClInclude>
     <ClInclude Include="CreateStage.h">
+      <Filter>_Game\Object\3D\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="StageObject.h">
       <Filter>_Game\Object\3D\Stage</Filter>
     </ClInclude>
   </ItemGroup>

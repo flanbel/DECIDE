@@ -25,7 +25,7 @@ sampler_state
 	MipFilter = NONE;
 	MinFilter = NONE;
 	MagFilter = NONE;
-	AddressU = Wrap;			//ŒJ‚è•Ô‚³‚È‚¢‚æ‚¤‚É‚·‚é
+	AddressU = Clamp;			//ŒJ‚è•Ô‚³‚È‚¢‚æ‚¤‚É‚·‚é
 	AddressV = Wrap;
 };
 

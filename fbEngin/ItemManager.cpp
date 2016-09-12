@@ -31,7 +31,7 @@ void CItemManager::Update()
 		AddItem->Awake();
 		AddItem->Start();
 		D3DXVECTOR3 p = { (rand() % ((short)m_range.x * 2)) - m_range.x, (rand() % ((short)m_range.y * 2)) - m_range.y, (rand() % ((short)m_range.z * 2)) - m_range.z };
-		AddItem->Transform()->LocalPosition = p;
+		AddItem->Transform()->Position = AddItem->Transform()->LocalPosition = p;
 		//アイテムリストに追加
 		m_ItemList.push_back(AddItem);
 		SINSTANCE(CObjectManager)->Add(AddItem);

@@ -1,4 +1,8 @@
 #include "CreateStage.h"
+#include <fstream>
+
+#include "ObjectManager.h"
+#include "StageObject.h"
 
 CCreateStatge::CCreateStatge()
 {
@@ -8,39 +12,75 @@ CCreateStatge::~CCreateStatge()
 {
 }
 
-void CCreateStatge::Create(const char* filepath)
+void CCreateStatge::Create(const char* filename)
 {
-	int binary[1000];
-	//バイナリファイルを文字列に変換
-	int cnt = ReadBinary(filepath, binary,1000);
-	float trans[3][3][3]; //pos,rot,sca
-	ZeroMemory(trans, sizeof(float)*(3 * 3 * 3));
-
-	FOR(cnt / 9)
+	string bin, na, Bpath, Npath;
+	bin = ".bin";
+	na = ".name";
+	Bpath = filename + bin;
+	Npath = filename + na;
+	FILE *Ofp, *Nfp;
+	errno_t err;	//エラー確認
+	//Object
+	if (err = fopen_s(&Ofp, Bpath.c_str(), "rb") != 0)
 	{
-		trans[i][0][0] = binary[i];
-		trans[i][0][1] = binary[i+1];
-		trans[i][0][2] = binary[i+2];
-
-		trans[i][1][0] = binary[i+3];
-		trans[i][1][1] = binary[i+4];
-		trans[i][1][2] = binary[i+5];
-
-		trans[i][2][0] = binary[i+6];
-		trans[i][2][1] = binary[i+7];
-		trans[i][2][2] = binary[i+8];
+		//エラーだよん
+		string name = Bpath;
+		string error = "ファイルパス：" + name
+			+ "\nファイルが存在しない、又はパスが違う可能性があります";
+		MessageBoxA(NULL, error.c_str(), TEXT("error:ファイルが開けませんでした。"), MB_OK);
 	}
+
+	//Name
+	std::ifstream in(Npath);
+
+	int binary[900];
+	ZeroMemory(binary, 900);
+	//読み込み
+	int cnt = fread_s(binary, 900, sizeof(int), 900, Ofp);
+
+	char name[256];
+
+	D3DXVECTOR3 pos, rot, sca;
+	for (short i = 0; i < cnt; i += 9)
+	{
+		in >> name;
+		pos.x = binary[i];
+		pos.y = binary[i + 1];
+		pos.z = binary[i + 2];
+
+		rot.x = binary[i + 3];
+		rot.y = binary[i + 4];
+		rot.z = binary[i + 5];
+
+		sca.x = binary[i + 6];
+		sca.y = binary[i + 7];
+		sca.z = binary[i + 8];
+
+		string a = "Field/";
+		string X = ".X";
+		string p = a + name + X;
+		//生成
+		CStageObject* obj = new CStageObject(p.c_str());
+		obj->Transform()->LocalPosition = pos;
+		obj->Transform()->LocalRotation = rot;
+		obj->Transform()->LocalScale = sca;
+		//登録
+		SINSTANCE(CObjectManager)->Add(obj);
+	}
+
+	fclose(Ofp);
 }
 
-int CCreateStatge::ReadBinary(const char* filepath, int* OutArray,int size)
+int CCreateStatge::ReadBinary(const char* filename, int* OutArray, int size)
 {
 	FILE* fp;
 	errno_t err;	//エラー確認
 	//ファイル開くよ
-	if (err = fopen_s(&fp, filepath, "rb") != 0)
+	if (err = fopen_s(&fp, filename, "rb") != 0)
 	{
 		//エラーだよん
-		string name = filepath;
+		string name = filename;
 		string error = "ファイルパス：" + name
 			+ "\nファイルが存在しない、又はパスが違う可能性があります";
 		MessageBoxA(NULL, error.c_str(), TEXT("error:ファイルが開けませんでした。"), MB_OK);

@@ -13,7 +13,9 @@ HRESULT CBattleScene::Start()
 	m_pMainCamera = new CGameCamera(1);
 	m_pShadowCamera = new CCamera();
 
-	m_CreateStage.Create("abc.bin");
+	//ƒJƒƒ‰“o˜^
+	SINSTANCE(CObjectManager)->SetCamera(m_ppCamera);
+	SINSTANCE(CObjectManager)->SetLightCamera(m_pShadowCamera);
 
 	//ƒJƒƒ‰‚Ì‹——£Ý’è
 	m_pMainCamera->Dist(D3DXVECTOR3(0.0f, 40.0f, -300.0f));
@@ -26,12 +28,10 @@ HRESULT CBattleScene::Start()
 
 	*m_ppCamera = m_pMainCamera;
 
-	//ƒJƒƒ‰“o˜^
-	SINSTANCE(CObjectManager)->SetCamera(m_ppCamera);
-	SINSTANCE(CObjectManager)->SetLightCamera(m_pShadowCamera);
-
 	//ƒXƒe[ƒW“Ç‚Ýž‚Ý
 	CTestStage* TestStage = (CTestStage*)SINSTANCE(CObjectManager)->Add(new CTestStage("TestStage"));
+	//
+	m_CreateStage.Create("abc");
 	
 	FOR(4)
 	{
