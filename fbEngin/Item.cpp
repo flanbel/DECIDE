@@ -1,14 +1,17 @@
 #include "Item.h"
 
-bool CItem::ItemUpdata()
+void CItem::ItemUpdata()
 {
 	//Ž‚½‚ê‚Ä‚¢‚È‚¢
 	if (!m_isHas)
 	{
 		//Žõ–½‚©‚çˆø‚­
-		m_life -= SINSTANCE(CTimer)->DeltaTime();
+		m_life -= (float)SINSTANCE(CTimer)->DeltaTime();
 	}
 
 	//Ž€‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
-	return (m_life <= 0);
+	if (m_life <= 0)
+	{
+		Delete(true);
+	}
 }

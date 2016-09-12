@@ -11,7 +11,7 @@ public:
 	
 	//3Dモデルを読み込み,モデルデータの参照を保持し、データの値を返す
 	//第一引数：string ファイルの名前
-	CSkinModelData LoadModel(string filename);
+	CSkinModelData LoadModel(string filename, ID3DXAnimationController** pAnime = nullptr);
 	//インスタンスを返す
 	static CSkinModelManager* getInstance();
 private:

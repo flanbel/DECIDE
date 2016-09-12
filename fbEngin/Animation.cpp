@@ -1,5 +1,6 @@
 #include "Animation.h"
 
+static int loopcount = 0;
 
 void CAnimation::Init(ID3DXAnimationController* anim)
 {
@@ -55,8 +56,10 @@ void CAnimation::PlayAnimation(const int& animationSetIndex)
 	}
 }
 
-void CAnimation::PlayAnimation(int animationSetIndex, float interpolateTime)
+void CAnimation::PlayAnimation(int animationSetIndex, float interpolateTime,int loop)
 {
+	m_LoopNum = loop;
+	loopcount = 0;
 	if (animationSetIndex < numAnimSet) {
 		if (pAnimController) {
 			//補間開始の印。
@@ -78,7 +81,11 @@ void CAnimation::PlayAnimation(int animationSetIndex, float interpolateTime)
 void CAnimation::Update(float deltaTime)
 {
 	if (pAnimController) {
+		double a = animationSets[currentTrackNo]->GetPeriod();
+		double b = animationSets[currentTrackNo]->GetPeriodicPosition(pAnimController->GetTime());
+
 		pAnimController->AdvanceTime(deltaTime, NULL);
+
 		if (isInterpolate) {
 			//補間中。
 			interpolateTime += deltaTime;
@@ -107,6 +114,17 @@ void CAnimation::Update(float deltaTime)
 					}
 				}
 			}
+		}
+
+		if (a < b + deltaTime)
+		{
+ 			loopcount++;
+		}
+
+		if (m_LoopNum != -1 &&
+			loopcount >= m_LoopNum)
+		{
+			pAnimController->SetTrackSpeed(currentTrackNo, 0.0f);
 		}
 	}
 }

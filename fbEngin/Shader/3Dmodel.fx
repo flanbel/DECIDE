@@ -25,6 +25,8 @@ sampler_state
 	MipFilter = NONE;
 	MinFilter = NONE;
 	MagFilter = NONE;
+	AddressU = Wrap;			//繰り返さないようにする
+	AddressV = Wrap;
 };
 
 
@@ -45,8 +47,8 @@ sampler_state
     MipFilter = NONE;
     MinFilter = NONE;
     MagFilter = NONE;
-    AddressU = Wrap;
-	AddressV = Wrap;
+	AddressU = CLAMP;
+	AddressV = CLAMP;
 };
 
 float4 g_toonLight;				//toonライト
@@ -193,8 +195,10 @@ PS_OUTPUT PSMain(VS_OUTPUT In)
 
 	color.color0 *= g_blendColor;
 
+	//デプスシャドウ
 	if (Shadowflg)
 	{
+
 		// ライト目線によるZ値の再算出
 		float ZValue = In.ZCalcTex.z / In.ZCalcTex.w;
 
@@ -203,20 +207,24 @@ PS_OUTPUT PSMain(VS_OUTPUT In)
 		TransTexCoord.x = (1.0f + In.ZCalcTex.x / In.ZCalcTex.w)*0.5f;
 		TransTexCoord.y = (1.0f + (-In.ZCalcTex.y) / In.ZCalcTex.w)*0.5f;
 
-		// リアルZ値抽出
-		float SM_Z = tex2D(g_LVPTexSampler, TransTexCoord).x;
+		if (TransTexCoord.x <= 1.0f && TransTexCoord.y <= 1.0f)
+		{
+			// リアルZ値抽出
+			float SM_Z = tex2D(g_LVPTexSampler, TransTexCoord).x;
 
-		// 算出点がシャドウマップのZ値よりも大きければ影と判断
-		if (ZValue > SM_Z + 0.005f){
-			color.color0.rgb = color.color0.rgb * 0.5f;
+			// 算出点がシャドウマップのZ値よりも大きければ影と判断
+			if (ZValue > SM_Z + 0.005f){
+				color.color0.rgb = color.color0.rgb * 0.5f;
+			}
 		}
 	}
 
 	//深度計算(RenderTarget1に出力される)
-	float Depth = (In.posWVP.z / In.posWVP.w);
+	float Depth = In.posWVP.z / In.posWVP.w;
 
 	color.color1 = Depth;
-
+	color.color1.a = 1.0f;
+	//調整した深度
 	if (0.0f <= Depth && Depth < 0.25f)
 	{
 		color.color2.a = 4 *  Depth;
@@ -250,10 +258,76 @@ PS_OUTPUT PSMain(VS_OUTPUT In)
 
 	//半透明合成
 	return color;
-	//加算合成
-	//return float4(color.xyz * g_blendColor.a, 3.0f / 1.0f);
 }
 
+PS_OUTPUT PSMainMini(VS_OUTPUT In)
+{
+	PS_OUTPUT color = (PS_OUTPUT)0;
+	//テクスチャの有無
+	if (g_Texflg){
+		//uvに張り付け
+		color.color0 = tex2D(g_TextureSampler, In.uv);
+	}
+	else
+	{
+		//マテリアルのカラーにする。
+		color.color0 = g_diffuseMaterial;
+	}
+
+	//デフューズライトを計算。
+	{
+		float4 dif = 0.0f;
+		{
+			for (int i = 0; i < DIFFUSE_LIGHT_NUM; i++){
+				//0.0f未満なら0.0fを返す
+				dif.xyz += max(0.0f, dot(In.normal.xyz, -g_diffuseLightDirection[i].xyz))
+					* g_diffuseLightColor[i].xyz;
+			}
+			dif += g_ambientLight;
+		}
+		color.color0.xyz *= dif.xyz;
+	}
+
+	//深度計算(RenderTarget1に出力される)
+	float Depth = In.posWVP.z / In.posWVP.w;
+
+	color.color1 = Depth;
+	color.color1.a = 1.0f;
+	//調整した深度
+	if (0.0f <= Depth && Depth < 0.25f)
+	{
+		color.color2.a = 4 * Depth;
+	}
+	else if (0.25f < Depth && Depth < 0.75f)
+	{
+		color.color2.a = 1.0f;
+	}
+	else if (0.75f < Depth && Depth <= 1.0f)
+	{
+		color.color2.a = 4 * (1 - Depth);
+	}
+
+	//if (true){
+
+	//	//αに輝度を埋め込む。
+	//	float luminance = dot(color.xyz, float3(0.2125f, 0.7154f, 0.0721f));
+	//	if (luminance > 1.0f){
+	//		luminance = 1.0f / luminance;
+	//	}
+	//	else{
+	//		luminance = 1.0f;
+	//	}
+
+	//	color.a = luminance;
+	//}
+	//else{
+	//	color.a = 1.0f;
+	//}
+
+
+	//半透明合成
+	return color;
+}
 
 /*!
 *@brief	エッジ用頂点シェーダー。
@@ -292,6 +366,12 @@ technique NormalRender
 	{
 		VertexShader = compile vs_3_0 VSMain();
 		PixelShader = compile ps_3_0 PSMain();
+	}
+
+	pass p1
+	{
+		VertexShader = compile vs_3_0 VSMain();
+		PixelShader = compile ps_3_0 PSMainMini();
 	}
 }
 

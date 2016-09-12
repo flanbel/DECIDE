@@ -2,10 +2,10 @@
 
 CObjectManager* CObjectManager::m_pInstance = new CObjectManager();
 
-CGameObject* CObjectManager::Add(CGameObject* pAdd, bool leave)
+CGameObject* CObjectManager::Add(CGameObject* pAdd, bool active)
 {
 	//残すフラグ設定
-	pAdd->Leave(leave);
+	pAdd->Active(active);
 	//2D
 	if (pAdd->Dimension() == DIMENSION::D2)
 	{
@@ -75,6 +75,48 @@ void CObjectManager::UpdateObject()
 			m_2D[m_CasheIdx][i]->Update();
 		}
 	}
+
+	//2D
+	{
+		vector<C2DObject*>::iterator it2 = m_2D[m_CasheIdx].begin();
+		//終わりまで繰り返し
+		while (it2 != m_2D[m_CasheIdx].end())
+		{
+			//
+			if ((*it2)->Delete())
+			{
+				SAFE_DELETE(*it2);
+				//戻り値が次のイテレータ
+				it2 = m_2D[m_CasheIdx].erase(it2);
+			}
+			else
+			{
+				//削除しなかった場合は次のイテレータ
+				it2++;
+			}
+		}
+	};
+
+	//3D
+	{
+		vector<C3DObject*>::iterator it = m_3D[m_CasheIdx].begin();
+		//終わりまで繰り返し
+		while (it != m_3D[m_CasheIdx].end())
+		{
+			//
+			if ((*it)->Delete())
+			{
+				SAFE_DELETE(*it);
+				//戻り値が次のイテレータ
+				it = m_3D[m_CasheIdx].erase(it);
+			}
+			else
+			{
+				//削除しなかった場合は次のイテレータ
+				it++;
+			}
+		}
+	};
 }
 
 void CObjectManager::LateUpdateObject()
@@ -96,7 +138,7 @@ void CObjectManager::LateUpdateObject()
 	}
 
 	//カメラの更新は最後?
-	if ((*m_ppCamera) != nullptr)
+	if ((*m_ppCamera))
 	{
 		(*m_ppCamera)->Move();
 		(*m_ppCamera)->Update();
@@ -138,8 +180,8 @@ void CObjectManager::ReleaseObject()
 		//終わりまで繰り返し
 		while (it2 != m_2D[m_CasheIdx].end())
 		{
-			//フラグがないなら削除
-			if (!(*it2)->Leave())
+			//アクティブなら削除
+			if ((*it2)->Active())
 			{
 				//(*it2)->Release();
 				SAFE_DELETE(*it2);
@@ -160,8 +202,8 @@ void CObjectManager::ReleaseObject()
 		//終わりまで繰り返し
 		while (it != m_3D[m_CasheIdx].end())
 		{
-			//フラグがないなら削除
-			if (!(*it)->Leave())
+			//アクティブなら削除
+			if ((*it)->Active())
 			{
 				//(*it)->Release();
 				SAFE_DELETE(*it);

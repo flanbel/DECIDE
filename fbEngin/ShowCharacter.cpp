@@ -8,6 +8,7 @@ CShowCharacter::CShowCharacter(string name) :C3DObject(name)
 void CShowCharacter::Start()
 {
 	y = 0;
+	m_Transform.LocalPosition = D3DXVECTOR3(0.0, -40.0, 50.0);
 	m_Transform.LocalRotation = D3DXVECTOR3(-90.0, 180.0, 0.0);
 }
 

@@ -23,13 +23,10 @@ HRESULT CTitleScene::Start()
 	Back->Transform()->LocalScale = D3DXVECTOR3(1.7f, 1.5f, 1.0f);
 	
 	//タイトルロゴ
-	CImage* Logo = (CImage*)SINSTANCE(CObjectManager)->Add(new CImage("TitleLogo"));
+	/*CImage* Logo = (CImage*)SINSTANCE(CObjectManager)->Add(new CImage("TitleLogo"));
 	Logo->Transform()->LocalPosition = D3DXVECTOR3(700, 410, 0);
 	Logo->LoadTex("TitleLogo2.png");
-	Logo->Transform()->LocalScale = D3DXVECTOR3(1.0f, 1.4f, 1.0f);
-
-	//選択カーソル
-	CSelectCursor* cursor = (CSelectCursor*)SINSTANCE(CObjectManager)->Add(new CSelectCursor("Cursor"));
+	Logo->Transform()->LocalScale = D3DXVECTOR3(1.0f, 1.4f, 1.0f);*/
 	
 	//スタートアイコン
 	m_Start = (CSelectIcon*)SINSTANCE(CObjectManager)->Add(new CSelectIcon("Start"));
@@ -44,6 +41,9 @@ HRESULT CTitleScene::Start()
 	m_Exit->SetTextSize(70);
 	m_Exit->SetTextColor(ICONSTATE::SELECT, 0, 165, 100);
 
+	//選択カーソル
+	CSelectCursor* cursor = (CSelectCursor*)SINSTANCE(CObjectManager)->Add(new CSelectCursor("Cursor"));
+
 	cursor->AddList(m_Start);
 	cursor->AddList(m_Exit);
 
@@ -55,7 +55,8 @@ HRESULT CTitleScene::Start()
 
 HRESULT CTitleScene::Update()
 {
-	if (GetAsyncKeyState(VK_RETURN))
+	if (GetAsyncKeyState(VK_RETURN) ||
+		g_Controller[0].isPushButton(XINPUT_GAMEPAD_B))
 	{
 		if (m_Start->Select())
 		{

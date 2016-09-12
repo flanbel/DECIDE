@@ -5,7 +5,6 @@
 #include "3DObject.h"
 #include "Character.h"
 #include "Item.h"
-#include "Input.h"
 
 #include "Collision.h"
 #include "ShowCollision.h"
@@ -13,7 +12,7 @@
 class CPlayer :public C3DObject
 {
 public:
-	CPlayer(string name = "");
+	CPlayer(int idx,string name = "a");
 	~CPlayer();
 
 	//初期化を行う関数(一度のみ呼ばれる)
@@ -49,16 +48,16 @@ private:
 	CCharacter* m_pChara;
 	//持っているアイテム
 	CItem* m_pHasItem;
-	//入力
-	CInputManager m_input;
 	//方向
 	D3DXVECTOR3 m_dir;
-
 	//あたり判定表示(デバッグ用)
 	CShowCollision m_show;
 
 	//ステータス
 	STATE m_State;
+	//プレイヤーの添え字(1P~4P)
+	int m_PlayerIdx;
+
 };
 
 #endif //_PLAYER_H_

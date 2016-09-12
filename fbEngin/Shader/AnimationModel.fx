@@ -155,6 +155,7 @@ PS_OUTPUT PSMain( VS_OUTPUT In )
 	float Depth = (In.PosWVP.z / In.PosWVP.w);
 
 	output.color1 = Depth;
+	output.color1.a = 1.0f;
 
 	if (0.0f <= Depth && Depth < 0.25f)
 	{

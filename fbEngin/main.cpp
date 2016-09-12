@@ -14,6 +14,7 @@
 //オブジェクト
 #include "Timer.h"
 #include "DInput.h"
+#include "XInput.h"
 
 #include "Text.h"
 
@@ -45,8 +46,13 @@ RECT WINDOW_POS;
 RECT CLIENT_RECT;
 //
 bool g_DebugMode = false;
+
+//コントローラー
+CXInput g_Controller[4];
+
 //FPSを描画する
 CText* g_FPS;
+
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -287,14 +293,19 @@ void Initialize()
 
 	//デバイス初期化
 	graphicsDevice().InitD3d(g_hWnd);
-
+	//タイマー初期化
 	SINSTANCE(CTimer)->Initialize();
+	//各コントローラー初期化
+	FOR(4)
+	{
+		g_Controller[i].Start(i+1);
+	}
 
 	g_FPS = new CText("FPS");
 
 	g_FPS->Start();
-	//
-	g_FPS->SetColor(255, 180, 0);
+	//色変更
+	g_FPS->SetColor(255, 255, 255);
 	//座標調整
 	g_FPS->Transform()->LocalPosition = D3DXVECTOR3(1200.0f, 690.0f, 0.0f);
 
@@ -331,6 +342,11 @@ void Update()
 
 	g_FPS->Update();
 	g_FPS->Createfont(FPS);
+
+	FOR(4)
+	{
+		g_Controller[i].Update();
+	}
 
 	//シーン更新
 	SINSTANCE(CSceneManager)->UpdateScene();

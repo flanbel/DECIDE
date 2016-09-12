@@ -44,8 +44,9 @@ public:
 	*@brief	アニメーションの再生。アニメーションの補完が行われます。
 	*@param[in]		animationSetIndex	再生したいアニメーションのインデックス。
 	*@param[in]		interpolateTime		補間時間。
+	//第三引数　ループ数
 	*/
-	void PlayAnimation(int animationSetIndex, float interpolateTime);
+	void PlayAnimation(int animationSetIndex, float interpolateTime,int loop = -1);
 #if 0
 	/*!
 	*@brief	アニメーションのブレンディング再生。
@@ -77,6 +78,8 @@ private:
 	bool									isInterpolate;			//!<補間中？
 	float									interpolateEndTime;		//!<補間終了時間。
 	float									interpolateTime;		//!<補間時間。
+
+	int										m_LoopNum;				//アニメーションのループ回数
 };
 
 #endif // _TKMOTION_H_

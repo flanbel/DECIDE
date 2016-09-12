@@ -23,7 +23,7 @@ void CRobo::Start()
 
 void CRobo::Update()
 {
-	m_Animation.Update(SINSTANCE(CTimer)->DeltaTime());
+	m_Animation.Update((float)SINSTANCE(CTimer)->DeltaTime());
 }
 
 void CRobo::Render()

@@ -58,6 +58,10 @@ using namespace std;
 //シーンのキャッシュの数,1だとキャッシュ機能なし
 #define SCENECASHE_NUM 2
 
+//遊べる人数
+//正直ゲームシステムとかに書くべきだと思うの
+#define MAX_PLAYER_NUM 4
+
 #define VECTOR3_ZERO D3DXVECTOR3(0.0f, 0.0f, 0.0f)
 #define VECTOR3_ONE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
 
@@ -97,6 +101,9 @@ extern RECT CLIENT_RECT;
 
 //デバッグモードフラグ
 extern bool g_DebugMode;
+#include "XInput.h"
+//コントローラー
+extern CXInput g_Controller[4];
 
 #include "support.h"
 #include "Vector.h"

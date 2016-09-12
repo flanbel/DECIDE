@@ -7,6 +7,7 @@
 #include "SkinModel.h"
 #include "Animation.h"
 #include "Camera.h"
+#include "GameCamera.h"
 #include "Light.h"
 
 class C3DObject :public CGameObject

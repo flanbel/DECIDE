@@ -3,6 +3,7 @@
 #define _ITEMMANAGER_H_
 
 #include "Item.h"
+#include "GameCamera.h"
 
 //アイテムを生成、管理
 class CItemManager
@@ -12,7 +13,7 @@ public:
 
 	//初期化を行う関数(一度のみ呼ばれる)
 	//第一引数：short アイテム生成確率?
-	void Start(CCamera** ppcamera, const vector<CItem*>* pitemswitch, short probability = 100);
+	void Start(const vector<CItem*>* pitemswitch, short probability = 10);
 
 	//更新を行う関数
 	void Update();
@@ -38,8 +39,6 @@ public:
 		return &m_ItemList;
 	}
 private:
-	//カメラ参照
-	CCamera** m_ppCamera;
 	//フィールド上のアイテムを格納
 	list<CItem*> m_ItemList;
 	//アイテム生成確率

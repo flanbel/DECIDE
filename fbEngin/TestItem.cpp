@@ -10,6 +10,7 @@ void CTestItem::Start()
 void CTestItem::Update()
 {
 	m_Transform.UpdateTransform();
+	ItemUpdata();
 }
 
 void CTestItem::LateUpdate()

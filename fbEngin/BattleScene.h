@@ -4,8 +4,11 @@
 
 #include "Scene.h"
 #include "Camera.h"
+#include "GameCamera.h"
+#include "GameCamera.h"
 #include "ItemManager.h"
 #include "Player.h"
+#include "CreateStage.h"
 
 #include "RenderTarget.h"
 #include "TextureManager.h"
@@ -29,7 +32,7 @@ public:
 	HRESULT Draw();
 private:
 	CCamera** m_ppCamera;	//カメラポインタへのポインタを格納
-	CCamera* m_pMainCamera;
+	CGameCamera* m_pMainCamera;
 	CCamera* m_pShadowCamera;
 
 	TEXTURE m_Shadowtex;	//影のテクスチャ
@@ -39,14 +42,16 @@ private:
 	vector<CItem*> m_ItemSwitch;	//アイテムスイッチ(出現するアイテム管理)
 	CItemManager m_ItemManager;
 
-	CPlayer* m_Player;
+	CPlayer* m_Player[4];
+
+	CCreateStatge m_CreateStage;
+
 
 	CRenderTarget m_RenderTarget[2];	//被写界深度用
 	TEXTURE m_tex[2];
 	CDepthField m_depth;
 
 	CImage m_i;	//確認用
-	
 };
 
 #endif //_BATTLESCENE_H_

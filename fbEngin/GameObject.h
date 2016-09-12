@@ -72,16 +72,16 @@ public:
 		return m_Active;
 	}
 
-	//残すフラグ設定　セッター
-	void Leave(bool leave)
+	//削除フラグ設定　セッター
+	void Delete(bool del)
 	{
-		m_Leave = leave;
+		m_Delete = del;
 	}
 
-	//残すフラグ取得　ゲッター
-	bool Leave()
+	//削除フラグ取得　ゲッター
+	bool Delete()
 	{
-		return m_Leave;
+		return m_Delete;
 	}
 
 	//次元設定　セッター
@@ -90,11 +90,10 @@ public:
 		return m_Dimension;
 	}
 protected:
-	bool m_Active;	//アクティブでないオブジェクトは描画もアップデートもされない
+	bool m_Active;	//アクティブでないオブジェクトは描画もアップデートもされない(オブジェクトマネージャから削除も)
+	bool m_Delete;	//オブジェクトマネージャーから削除するフラグ
 	string m_Name;	//オブジェクトの名前
 	CTransform m_Transform;//トランスフォーム
-	//オブジェクトマネージャーに残すフラグ
-	bool m_Leave;
 	DIMENSION m_Dimension;	//自分の次元を示す(2Dか3Dか)
 };
 #endif //_GAMEOBJECT_H_

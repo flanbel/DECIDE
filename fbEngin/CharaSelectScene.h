@@ -11,9 +11,6 @@
 #include "CharacterSelect.h"
 #include "Character.h"
 
-//遊べる人数
-#define MAX_PLAYER_NUM 1
-
 //キャラクター選択シーン
 class CCharaSelectScene :public CScene
 {

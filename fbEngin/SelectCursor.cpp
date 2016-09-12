@@ -9,6 +9,7 @@ CSelectCursor::CSelectCursor(string name) :C2DObject(name)
 void CSelectCursor::Start()
 {
 	it = m_SelectList.begin();
+	m_NowSelect = m_SelectList._Myval(it._Mynode());
 }
 
 void CSelectCursor::Update()
@@ -25,7 +26,9 @@ void CSelectCursor::Render()
 
 void CSelectCursor::MoveList()
 {	
-	if (m_input.isPressed(VK_UP))
+	if (m_input.isPressed(VK_UP) ||
+		g_Controller[0].isPushButton(XINPUT_GAMEPAD_DPAD_UP) ||
+		g_Controller[0].IsPushAnalog(Analog::L_STICKU))
 	{
 		//前のノードがないなら
 		if (it != m_SelectList.begin())
@@ -43,7 +46,9 @@ void CSelectCursor::MoveList()
 		m_NowSelect->Select(false);
 	}
 
-	if (m_input.isPressed(VK_DOWN))
+	if (m_input.isPressed(VK_DOWN)||
+		g_Controller[0].isPushButton(XINPUT_GAMEPAD_DPAD_DOWN) ||
+		g_Controller[0].IsPushAnalog(Analog::L_STICKD))
 	{
 		//次のノードがないなら
 		if (++it == m_SelectList.end())
@@ -55,6 +60,7 @@ void CSelectCursor::MoveList()
 		m_NowSelect->Select(false);
 	}
 
+	//itからポインタを取得
 	m_NowSelect = m_SelectList._Myval(it._Mynode());
 	//新たに決定したのでフラグtrue
 	m_NowSelect->Select(true);

@@ -30,7 +30,7 @@ public:
 
 	//アイテム共通アップデート
 	//死んでいるならtrueを返す
-	bool ItemUpdata();
+	void ItemUpdata();
 
 	CSkinModelData GetModelData()
 	{

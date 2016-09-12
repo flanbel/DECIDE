@@ -40,12 +40,34 @@ void CSkinModel::DrawMeshContainer(
 	if (pMeshContainer->pSkinInfo != NULL)
 	{
 		//ボーンがあるならこっち
-		RenderAnimate(pMeshContainer,pFrame);
+		switch (m_Mode)
+		{
+		case STANDARD:
+			RenderAnimate(pMeshContainer, pFrame);
+			break;
+		case MINIMUM:
+			RenderAnimateMini(pMeshContainer, pFrame);
+			break;
+		default:
+			break;
+		}
 	}
 	else
 	{
 		//ボーンのないモデルはこっち
-		RenderNonAnimate(pMeshContainer, pFrame);
+		switch (m_Mode)
+		{
+		case STANDARD:
+			
+			RenderNonAnimate(pMeshContainer, pFrame);
+			break;
+		case MINIMUM:
+			RenderNonAnimateMini(pMeshContainer, pFrame);
+			break;
+		default:
+			break;
+		}
+		
 	}
 }
 
@@ -82,13 +104,14 @@ void CSkinModel::DrawFrame(LPD3DXFRAME pFrame)
 }
 
 
-void CSkinModel::Render(CCamera* pcamera, CCamera* plightcamera, CLight* plight)
+void CSkinModel::Render(CCamera* pcamera, CCamera* plightcamera, CLight* plight,MODE mode)
 {
 	//カメラ設定
 	m_pCamera = pcamera;
 	m_pLightCamera = plightcamera;
 	if (plight != nullptr)
 		m_pLight = plight;
+	m_Mode = mode;
 
 	//モデルデータがあるなら
 	if (m_pModelDate)
@@ -179,15 +202,90 @@ void CSkinModel::RenderAnimate(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFR
 	m_pEffect->End();
 }
 
+//今は普通のやつと変わらぬ
+void CSkinModel::RenderAnimateMini(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame)
+{
+
+	//アニメーション有り
+	//エフェクト読み込み
+	m_pEffect = SINSTANCE(CEffectManager)->LoadEffect("AnimationModel.fx");
+
+	m_pEffect->SetTechnique("NormalRender");
+	m_pEffect->Begin(0, D3DXFX_DONOTSAVESTATE);
+	m_pEffect->BeginPass(0);
+
+	//ライトの向きを転送。
+	m_pEffect->SetVectorArray("g_diffuseLightDirection", m_pLight->GetDLight().Direction, sizeof(m_pLight->GetDLight().Direction));
+	//ライトのカラーを転送。
+	m_pEffect->SetVectorArray("g_diffuseLightColor", m_pLight->GetDLight().Color, sizeof(m_pLight->GetDLight().Color));
+	//環境光
+	m_pEffect->SetVector("g_ambientLight", &m_pLight->GetAmbient());
+
+	UINT iAttrib;
+	//バッファー
+	LPD3DXBONECOMBINATION pBoneComb = LPD3DXBONECOMBINATION(pMeshContainer->pBoneCombinationBuf->GetBufferPointer());
+	//各マテリアル
+	for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
+	{
+		//ボーン
+		for (DWORD iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry)
+		{
+			DWORD iMatrixIndex = pBoneComb[iAttrib].BoneId[iPaletteEntry];
+			if (iMatrixIndex != UINT_MAX)
+			{
+				//骨の最終的な行列計算
+				D3DXMatrixMultiply(
+					&g_pBoneMatrices[iPaletteEntry],
+					//骨のオフセット(移動)行列
+					&pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
+					//フレームのワールド行列
+					pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]
+					);
+			}
+		}
+
+		//こっちは普通にワールドマトリックスを渡す
+		m_pEffect->SetMatrix("g_rotationMatrix", &m_pTrans->RotateMatrix());
+		//m_pEffect->SetMatrix("g_worldMatrix", &pFrame->CombinedTransformationMatrix);		//骨にかけているからいらないよ(ppBoneMatrixPtrs)
+		m_pEffect->SetMatrix("g_viewMatrix", &m_pCamera->View());
+		m_pEffect->SetMatrix("g_projectionMatrix", &m_pCamera->Projection());
+
+		//骨のワールド行列配列
+		m_pEffect->SetMatrixArray("g_mWorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
+		//骨の数]
+		m_pEffect->SetFloat("g_numBone", (float)pMeshContainer->NumInfl);
+
+		//ディフューズカラー取得
+		D3DXVECTOR4* Diffuse = (D3DXVECTOR4*)&pMeshContainer->pMaterials[iAttrib].MatD3D.Diffuse;
+
+		//テクスチャが格納されていればセット
+		if (pMeshContainer->ppTextures[iAttrib] != NULL)
+		{
+			// ディフューズテクスチャ。
+			m_pEffect->SetTexture("g_diffuseTexture", pMeshContainer->ppTextures[iAttrib]);
+			m_pEffect->SetBool("Texflg", true);
+		}
+		//テクスチャがないならカラーセット
+		else if (Diffuse != NULL)
+		{
+			m_pEffect->SetVector("g_diffuseMaterial", Diffuse);
+			m_pEffect->SetBool("Texflg", false);
+		}
+
+		// ボーン数。
+		m_pEffect->SetInt("CurNumBones", pMeshContainer->NumInfl - 1);
+
+		// draw the subset with the current world matrix palette and material state
+		m_pEffect->CommitChanges();
+		pMeshContainer->MeshData.pMesh->DrawSubset(iAttrib);
+	}
+	m_pEffect->EndPass();
+	m_pEffect->End();
+}
+
 //アニメーションなし。
 void CSkinModel::RenderNonAnimate(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame)
 {
-	////ワールド行列を格納
-	//D3DXMATRIX Wolrd;			//最終的なモデルの座標
-	//D3DXMATRIX parent = m_pTrans->WorldMatrix();
-	////計算
-	//D3DXMatrixMultiply(&Wolrd, &pFrame->TransformationMatrix, &parent);
-
 	//エフェクト読み込み
 	m_pEffect = SINSTANCE(CEffectManager)->LoadEffect("3Dmodel.fx");
 
@@ -363,6 +461,84 @@ void CSkinModel::RenderNonAnimate(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3D
 	(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
 	(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
 }
+
+void CSkinModel::RenderNonAnimateMini(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame)
+{
+	//エフェクト読み込み
+	m_pEffect = SINSTANCE(CEffectManager)->LoadEffect("3Dmodel.fx");
+
+	//透過処理有効
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//半透明合成
+	(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//通常描画
+	{
+		//テクニックをセット
+		m_pEffect->SetTechnique("NormalRender");
+
+		//※beginとendは必ず対にする。
+		m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+		m_pEffect->BeginPass(1);
+
+		//ライトの向きを転送。
+		m_pEffect->SetVectorArray("g_diffuseLightDirection", m_pLight->GetDLight().Direction, sizeof(m_pLight->GetDLight().Direction));
+		//ライトのカラーを転送。
+		m_pEffect->SetVectorArray("g_diffuseLightColor", m_pLight->GetDLight().Color, sizeof(m_pLight->GetDLight().Color));
+		//環境光
+		m_pEffect->SetVector("g_ambientLight", &m_pLight->GetAmbient());
+
+		//各行列をセット。
+		m_pEffect->SetMatrix("g_rotationMatrix", &pFrame->CombinedTransformationMatrix);
+
+		m_pEffect->SetMatrix("g_worldMatrix", &pFrame->CombinedTransformationMatrix);
+		m_pEffect->SetMatrix("g_viewMatrix", &m_pCamera->View());
+		m_pEffect->SetMatrix("g_projectionMatrix", &m_pCamera->Projection());
+
+		//マテリアルの数
+		DWORD MaterialNum = pMeshContainer->NumMaterials;
+		//マテリアル
+		D3DXMATERIAL *mtrl = (D3DXMATERIAL*)(pMeshContainer->pMaterials);
+
+		//モデル描画
+		for (DWORD i = 0; i < MaterialNum; i++)
+		{
+			//ディフューズカラー
+			D3DXVECTOR4* Diffuse = (D3DXVECTOR4*)&mtrl[i].MatD3D.Diffuse;
+
+			//テクスチャー
+			LPDIRECT3DTEXTURE9 texture = pMeshContainer->ppTextures[i];
+
+			//テクスチャが格納されていればセット
+			if (texture != NULL)
+			{
+				m_pEffect->SetTexture("g_Texture", texture);
+				m_pEffect->SetBool("g_Texflg", true);
+			}
+			//テクスチャがないならカラーセット
+			else if (Diffuse != NULL)
+			{
+				m_pEffect->SetVector("g_diffuseMaterial", Diffuse);
+				m_pEffect->SetBool("g_Texflg", false);
+			}
+
+			//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
+			m_pEffect->CommitChanges();
+			// Draw the mesh subset
+			pMeshContainer->MeshData.pMesh->DrawSubset(i);
+		}
+
+		m_pEffect->EndPass();
+		m_pEffect->End();
+	}
+
+	//変更したステートを元に戻す
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+}
+
 
 //モデルデータの行列更新
 void CSkinModel::UpdateFrameMatrix()

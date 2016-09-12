@@ -8,6 +8,7 @@
 #include "3DObject.h"
 
 #include "Camera.h"
+#include "GameCamera.h"
 
 //オブジェクトを管理するクラス
 class CObjectManager
@@ -21,8 +22,8 @@ public:
 	}
 	//マネージャーにオブジェクトを追加する
 	//戻り値：CGameObject* 追加に成功したオブジェクトのポインタ
-	//第一引数：CGameObject* アドレス,bool 残すかどうか = false
-	CGameObject* Add(CGameObject* pAdd, bool leave = false);
+	//第一引数：CGameObject* アドレス,bool アクティブ = false
+	CGameObject* Add(CGameObject* pAdd, bool active = true);
 
 	//シーンのスタートの後に呼び出される
 	void AwakeObject();

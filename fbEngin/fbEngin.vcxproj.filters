@@ -56,11 +56,11 @@
     <Filter Include="fbEngin\Manager">
       <UniqueIdentifier>{066fe9be-bedf-400a-9029-97b423d27ba3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="_Game\Object\3D\Object">
-      <UniqueIdentifier>{a2746dda-2ade-4801-8972-9ca2e1354166}</UniqueIdentifier>
-    </Filter>
     <Filter Include="_Game\Object\3D\Item">
       <UniqueIdentifier>{c8f1d6cd-93ba-43f7-afe8-bdc776420584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Game\Object\3D\Camera">
+      <UniqueIdentifier>{e991d3a5-7e0b-414f-b20a-16e665c3202f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +225,21 @@
     </ClCompile>
     <ClCompile Include="GaussianFilter.cpp">
       <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="GreatSowrd.cpp">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="XInput.cpp">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>_Game\Object\3D\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowCamera.cpp">
+      <Filter>_Game\Object\3D\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateStage.cpp">
+      <Filter>_Game\Object\3D\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +428,21 @@
     </ClInclude>
     <ClInclude Include="GaussianFilter.h">
       <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="GreatSowrd.h">
+      <Filter>_Game\Object\3D\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="XInput.h">
+      <Filter>fbEngin\ANDMORE</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCamera.h">
+      <Filter>_Game\Object\3D\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowCamera.h">
+      <Filter>_Game\Object\3D\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateStage.h">
+      <Filter>_Game\Object\3D\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

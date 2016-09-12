@@ -6,7 +6,7 @@ CGameObject::CGameObject(string name)
 	m_Transform.GameObject(this);
 	m_Active = true;
 	m_Name = name;
-	m_Leave = false;
+	m_Delete = false;
 	m_Dimension = DIMENSION::DNON;
 }
 

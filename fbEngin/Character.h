@@ -34,6 +34,17 @@ struct STATE
 	}
 };
 
+enum STATE_PATTERN		//キャラクターの行動パターン（仮）
+{
+	STAY,		//待機
+	FIGHTING,	//ファイティングポーズ
+	WALK,		//歩き
+	RUN,		//走り
+	PUNCH,		//パンチ
+	KICK,		//キック
+	ITEM_BRANDISH	//アイテムを振る
+};
+
 //キャラクターの基底クラス
 //キャラクターのデータ(情報)を扱う
 //CharacterInfoのほうが良かったかも
@@ -44,6 +55,7 @@ public:
 	{
 		pHand = nullptr;
 		m_AnimationSpeed = 1.0;
+		m_Pattern = STATE_PATTERN::STAY;
 	};
 
 	~CCharacter()
@@ -90,11 +102,18 @@ public:
 	{
 		m_Animation.PlayAnimation(animationSetIndex, interpolateTime);
 	}
+
+	void SetPattern(STATE_PATTERN pat)
+	{
+		m_Pattern = pat;
+	}
 protected:
 	//キャラクターのモデルデータの値
 	CSkinModelData m_ModelData;
 	//アニメーション管理
 	CAnimation m_Animation;
+	//各オブジェクトのアニメーションコントローラー
+	ID3DXAnimationController* m_pAnime;
 	//アニメーション再生スピード倍率
 	float m_AnimationSpeed;
 
@@ -104,6 +123,8 @@ protected:
 	D3DXFRAME_DERIVED* pHand;
 	//ステータス
 	STATE m_CharaState;
+	//パターン
+	STATE_PATTERN m_Pattern;
 };
 
 #endif //_CHARACTER_H_

@@ -11,15 +11,16 @@
 #include "RenderTarget.h"
 
 #include "Input.h"
+#include "GameCamera.h"
 
 //キャラクターを選択するクラス
 class CCharacterSelect :public C2DObject
 {
 public:
-	CCharacterSelect(string name = "");
+	CCharacterSelect(int idx,string name = "");
 	~CCharacterSelect()
 	{
-		SAFE_DELETE(m_camera);
+		SAFE_DELETE(m_GameCamera);
 	}
 	//初期化を行う関数(一度のみ呼ばれる)
 	void Start();
@@ -50,7 +51,7 @@ private:
 	//名前表示
 	CText m_NameText;
 
-	CCamera* m_camera;
+	CGameCamera* m_GameCamera;
 	//3dモデル表示
 	CShowCharacter m_Show;
 
@@ -65,6 +66,9 @@ private:
 	
 	//レンダーターゲット
 	CRenderTarget m_RenderT;
+
+	//
+	int PlayerIdx;
 };
 
 #endif //_CHARACTERSELECT_H_

@@ -19,7 +19,7 @@ public:
 	D3DXMATRIX Rotation(){ return m_Rotation; }
 
 	//カメラ移動関数(仮)
-	void Move();
+	virtual void Move();
 
 	//視点取得
 	D3DXVECTOR3 Pos()
@@ -51,12 +51,6 @@ public:
 		return m_Dist;
 	}
 
-	//ターゲット(オブジェクト)設定
-	void Target(C3DObject* pT)
-	{
-		m_pTarget = pT;
-	}
-
 	//画角設定
 	void ViewAngle(float theta)
 	{
@@ -78,17 +72,13 @@ public:
 		m_Aspect = aspect;
 	}
 
-	void m();
-private:
+protected:
 	//カメラのポジション
 	D3DXVECTOR3 m_Pos;
 	//カメラの注視点
 	D3DXVECTOR3 m_TargetPos;
 	//ターゲットとカメラの距離
 	D3DXVECTOR3 m_Dist;
-	
-	//ターゲット(オブジェクト)
-	C3DObject* m_pTarget;
 
 	//ビュー行列
 	D3DXMATRIX m_View;
@@ -101,8 +91,5 @@ private:
 	float m_Near;		//近平面
 	float m_Far;		//遠平面
 	float m_Aspect;		//アスペクト比
-
-	//カメラの回転角度
-	D3DXVECTOR3 m_angle;
 };
 #endif //_CAMERA_H_

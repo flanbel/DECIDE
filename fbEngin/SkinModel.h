@@ -8,11 +8,19 @@
 enum TYPE
 {
 	SHADOW,		//影を落とすかどうか
+	BLOOM,		//光をあふれさせるかどうか
 	EDGE,		//エッジをかけるかどうか
 	TOON,		//トゥーンシェーダをかけるかどうか
 	SPECULAR,	//スペキュラーライトを適用するかどうか
 	FRESNEL,	//フレネル反射を適用するかどうか
 	TYPE_NUM	//TYPEの総数
+};
+
+//
+enum MODE
+{
+	STANDARD,		//通常描画
+	MINIMUM,	//最低限の描画
 };
 
 class CEffect;
@@ -27,10 +35,14 @@ public:
 	~CSkinModel();
 
 	//3Dモデルの描画を呼び出す
-	//第一引数：CCamera* カメラ,
+	//第一引数：CCamera* ゲームカメラ,
 	//第二引数：CCamera* ライトのカメラ,
-	//第三引数：：CLight* ライト(任意)　= &CLight::Standard(標準ライト)
-	void Render(CCamera*, CCamera*, CLight* = nullptr);
+	//第三引数：CLight* ライト(任意)　= nullptr
+	//第四引数：MODE 描画モード = STANDARD
+	void Render(CCamera*, CCamera*, CLight* = nullptr,MODE = MODE::STANDARD);
+
+	//モデルデータの行列更新
+	void UpdateFrameMatrix();
 
 	//色設定
 	void BlendColor(D3DXVECTOR4 color)
@@ -65,10 +77,6 @@ public:
 		m_pTrans = pT;
 	}
 
-	//モデルデータの行列更新
-	void UpdateFrameMatrix();
-
-
 	void SetDepth(TEXTURE tex)
 	{
 		m_pLightDepth = tex;
@@ -78,11 +86,13 @@ private:
 	CEffect* m_pEffect;
 	//モデルデータへアクセスするためのポインタ保持
 	CSkinModelData* m_pModelDate;
-	//親
+	//親行列
 	D3DXMATRIX* m_Parent;
 
 	//描画タイプ
 	bool m_RenderType[TYPE::TYPE_NUM];
+	//描画モード
+	MODE m_Mode;
 
 	//混ぜる色
 	D3DXVECTOR4 m_BlendColor;
@@ -94,6 +104,9 @@ private:
 	CLight* m_pLight;
 
 	TEXTURE m_pLightDepth;		//ライトから見た深度テクスチャ
+
+
+
 
 	//プライベート関数
 
@@ -110,5 +123,10 @@ private:
 	void RenderAnimate(D3DXMESHCONTAINER_DERIVED* pMeshContainerBase, D3DXFRAME_DERIVED* pFrame);
 	//アニメーションなしモデル描画
 	void RenderNonAnimate(D3DXMESHCONTAINER_DERIVED* pMeshContainerBase, D3DXFRAME_DERIVED* pFrame);
+
+	//アニメーションありモデル描画
+	void RenderAnimateMini(D3DXMESHCONTAINER_DERIVED* pMeshContainerBase, D3DXFRAME_DERIVED* pFrame);
+	//アニメーションなしモデル描画
+	void RenderNonAnimateMini(D3DXMESHCONTAINER_DERIVED* pMeshContainerBase, D3DXFRAME_DERIVED* pFrame);
 };
 #endif //_SKINMODEL_H_

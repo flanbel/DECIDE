@@ -51,7 +51,7 @@ HRESULT CCharaSelectScene::Start()
 	{
 		string n; 
 		Support::IntToString(&n, i+1);
-		m_Select[i] = (CCharacterSelect*)SINSTANCE(CObjectManager)->Add(new CCharacterSelect("Select" + n));
+		m_Select[i] = (CCharacterSelect*)SINSTANCE(CObjectManager)->Add(new CCharacterSelect(i+1,"Select" + n));
 		m_Select[i]->Transform()->LocalPosition = D3DXVECTOR3(170.0f + (i * 315.0f), 440.0f, 0.0f);
 		m_Select[i]->SetCharaList(m_CharacterList);
 	}
@@ -80,7 +80,8 @@ HRESULT CCharaSelectScene::Update()
 	}
 
 	//タイトルにバック
-	if (m_input.isKeyDown(VK_B))
+	if (m_input.isKeyDown(VK_B) ||
+		g_Controller[0].IsPressButton(XINPUT_GAMEPAD_A))
 	{
 		m_timer += SINSTANCE(CTimer)->DeltaTime();
 		m_BackB->SetAlpha(0.5f);
@@ -100,7 +101,8 @@ HRESULT CCharaSelectScene::Update()
 
 	//戦闘シーンに遷移
 	if (SelectPlayerNum > 0 &&
-		m_input.isPressed(VK_SPACE))
+		m_input.isPressed(VK_SPACE)||
+		g_Controller[0].isPushButton(XINPUT_GAMEPAD_START))
 	{
 		//プレイヤー
 		SetPlayer();
@@ -132,10 +134,11 @@ void CCharaSelectScene::SetPlayer()
 		{
 			//プレイヤー登録
 			//シーンをまたいでも残るように設定
-			CPlayer* Player = (CPlayer*)SINSTANCE(CObjectManager)->Add(new CPlayer("Player" + num), true);
+			CPlayer* Player = (CPlayer*)SINSTANCE(CObjectManager)->Add(new CPlayer(i+1,"Player" + num), false);
 
-			//クラス比較
+			//typeidを使いクラスで比較している
 			//もっとスマートにできるはず・・・
+			//Player->SetCharacter(chara);
 			if (typeid(CTestChara) == typeid(*chara))
 			{
 				Player->SetCharacter(new CTestChara);

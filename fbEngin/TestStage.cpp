@@ -2,8 +2,9 @@
 
 void CTestStage::Start()
 {
-	m_ModelData = SINSTANCE(CSkinModelManager)->LoadModel("Stage.X");
-	m_model.SetModelData(&m_ModelData);
+	m_ModelData = SINSTANCE(CSkinModelManager)->LoadModel("TestStage.X");
+
+	m_Transform.LocalRotation = D3DXVECTOR3(-90, 0.0, 0.0);
 }
 
 void CTestStage::Update()

@@ -2,9 +2,10 @@
 #include "CharacterSelect.h"
 #include "ObjectManager.h"
 
-CCharacterSelect::CCharacterSelect(string name) :C2DObject(name)
+CCharacterSelect::CCharacterSelect(int idx,string name) :C2DObject(name)
 {
 	//初期化
+	PlayerIdx = idx;
 	m_SelectChara = nullptr;
 };
 
@@ -56,15 +57,15 @@ void CCharacterSelect::Start()
 	m_NameText.Transform()->LocalPosition = D3DXVECTOR3(0.0f, 200.0f, 0.0f);
 
 
-	m_camera = new CCamera();
+	m_GameCamera = new CGameCamera(0);
 	//m_pShow = (CShowCharacter*)SINSTANCE(CObjectManager)->Add(new CShowCharacter(m_Name + "ShowChara"));
-	m_Show.SetCamera(&m_camera);
+	m_Show.SetCamera((CCamera**)&m_GameCamera);
 	m_Show.name(m_Name + "ShowChara");
 	m_Show.Start();
 	
-	m_camera->Start();
-	m_camera->Dist(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
-	m_camera->TargetPos(D3DXVECTOR3(0.0f, 8.5f, 0.0f));
+	m_GameCamera->Start();
+	m_GameCamera->Dist(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	m_GameCamera->TargetPos(D3DXVECTOR3(0.0f, 8.5f, 0.0f));
 
 	m_RenderT.CreateRenderTarget(m_Sprite.GetpTex(), 256, 350, D3DCOLOR_RGBA(255, 255, 255, 255));
 
@@ -74,8 +75,8 @@ void CCharacterSelect::Start()
 
 void CCharacterSelect::Update()
 {
-	m_camera->Update();
-	//m_camera.Move();
+	m_GameCamera->Update();
+	//m_GameCamera.Move();
 
 	m_Transform.UpdateTransform();
 	m_Chart.Update();
@@ -89,7 +90,9 @@ void CCharacterSelect::Update()
 
 	m_input.UpdateKeyboardState();
 
-	if (m_input.isPressed(VK_RIGHT))
+	if (m_input.isPressed(VK_RIGHT) ||
+		g_Controller[(PlayerIdx - 1)].isPushButton(XINPUT_GAMEPAD_DPAD_RIGHT) ||
+		g_Controller[(PlayerIdx - 1)].IsPushAnalog(Analog::L_STICKR))
 	{
 		//最大数を超えないように
 		m_ListIdx = (m_ListIdx + 1) % (short)m_CharacterList.size();
@@ -98,7 +101,9 @@ void CCharacterSelect::Update()
 
 		m_Arraw[1].Transform()->LocalScale = D3DXVECTOR3(1.2f, 1.2f, 1.0f);
 	}
-	else if (m_input.isPressed(VK_LEFT))
+	else if (m_input.isPressed(VK_LEFT) ||
+		g_Controller[(PlayerIdx - 1)].isPushButton(XINPUT_GAMEPAD_DPAD_LEFT) ||
+		g_Controller[(PlayerIdx - 1)].IsPushAnalog(Analog::L_STICKL))
 	{
 		//マイナスにならないように
 		if ((m_ListIdx - 1) < 0)

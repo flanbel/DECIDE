@@ -4,7 +4,7 @@
 void CDepthField::Initialize()
 {
 	m_RT[0].CreateRenderTarget(&m_tex[0], GAME_CLIENT_WIDTH, GAME_CLIENT_HEIGHT);
-	m_RT[1].CreateRenderTarget(&m_tex[1], GAME_CLIENT_WIDTH, GAME_CLIENT_HEIGHT);
+	m_RT[1].CreateRenderTarget(&m_tex[1], GAME_CLIENT_WIDTH/2, GAME_CLIENT_HEIGHT/2);
 	m_RT[2].CreateRenderTarget(&m_tex[2], GAME_CLIENT_WIDTH, GAME_CLIENT_HEIGHT);
 
 	//エフェクト読み込み
@@ -15,21 +15,21 @@ void CDepthField::DepthofField(TEXTURE* tex1, TEXTURE* Depth)
 {
 	m_RT[0].SetRenderTarget(0);
 
-	m_Gaussian.XBlur(tex1, 5.0f);
+	m_Gaussian.XBlur(tex1, 25.0f);
 
 	m_RT[1].SetRenderTarget(0);
 
-	m_Gaussian.YBlur(&m_tex[0], 5.0f);
+	m_Gaussian.YBlur(&m_tex[0], 25.0f);
 
 	//[1]ぼやけ
 
 	m_RT[2].SetRenderTarget(0);
 
-	m_Gaussian.XBlur(&m_tex[1], 15.0f);
+	m_Gaussian.XBlur(&m_tex[1], 25.0f);
 
 	m_RT[0].SetRenderTarget(0);
 
-	m_Gaussian.YBlur(&m_tex[2], 15.0f);
+	m_Gaussian.YBlur(&m_tex[2], 25.0f);
 
 	//[0]もっとぼやけ
 
