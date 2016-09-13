@@ -1,8 +1,18 @@
-﻿Build started 2016/09/12 18:51:24.
+﻿Build started 2016/09/12 18:56:25.
      1>Project "D:\_Users\Desktop\DECIDE\fbEngin\fbEngin.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIstdafx.h /analyze- /errorReport:prompt TestItem.cpp
-         TestItem.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIstdafx.h /analyze- /errorReport:prompt CreateStage.cpp
+         CreateStage.cpp
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(48): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(49): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(50): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(52): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(53): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(54): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(56): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(57): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(58): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>d:\_users\desktop\decide\fbengin\createstage.cpp(22): warning C4101: 'Nfp' : ローカル変数は 1 度も使われていません。
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\_Users\Desktop\DECIDE\Debug\fbEngin.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\_Users\Desktop\DECIDE\Debug\fbEngin.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\_Users\Desktop\DECIDE\Debug\fbEngin.lib" /MACHINE:X86 Debug\fbEngin.res
          Debug\2DLine.obj
@@ -70,4 +80,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.34
+Time Elapsed 00:00:02.39

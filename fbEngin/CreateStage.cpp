@@ -45,7 +45,7 @@ void CCreateStatge::Create(const char* filename)
 	for (short i = 0; i < cnt; i += 9)
 	{
 		in >> name;
-		pos.x = binary[i];
+		pos.x = binary[i] + 20;
 		pos.y = binary[i + 1];
 		pos.z = binary[i + 2];
 
